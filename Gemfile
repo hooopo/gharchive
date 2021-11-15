@@ -56,3 +56,7 @@ end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem "yajl-ruby", "~> 1.4"
+
+gem "activerecord-tidb-adapter", "~> 6.1"
+
+gem "dotenv-rails", "~> 2.7", require: 'dotenv/rails-now'

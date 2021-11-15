@@ -10,16 +10,16 @@
 #   https://dev.mysql.com/doc/refman/5.7/en/password-hashing.html
 #
 default: &default
-  adapter: mysql2
+  adapter: tidb
   encoding: utf8mb4
+  collation: utf8mb4_unicode_ci
+  variables:
+    tidb_enable_noop_functions: ON
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  username: root
-  password:
-  socket: /tmp/mysql.sock
+  url: <%= ENV['DATABASE_URL'] %>
 
 development:
   <<: *default
-  database: gharchive_development
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
@@ -51,5 +51,3 @@ test:
 production:
   <<: *default
   database: gharchive_production
-  username: gharchive
-  password: <%= ENV['GHARCHIVE_DATABASE_PASSWORD'] %>

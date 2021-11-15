@@ -16,6 +16,7 @@ ActiveRecord::Schema.define(version: 2021_11_15_141912) do
     t.string "type"
     t.json "actor"
     t.json "repo"
+    t.json "org"
     t.json "payload"
     t.boolean "public"
     t.datetime "created_at"

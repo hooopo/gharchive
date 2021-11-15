@@ -5,6 +5,7 @@ class CreateGithubEvents < ActiveRecord::Migration[6.1]
       t.string :type
       t.json :actor
       t.json :repo
+      t.json :org
       t.json :payload
       t.boolean :public
       t.datetime :created_at

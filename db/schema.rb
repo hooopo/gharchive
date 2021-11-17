@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_15_141912) do
+ActiveRecord::Schema.define(version: 2021_11_17_145821) do
 
   create_table "github_events", id: :string, charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
     t.string "type"
@@ -20,6 +20,7 @@ ActiveRecord::Schema.define(version: 2021_11_15_141912) do
     t.json "payload"
     t.boolean "public"
     t.datetime "created_at"
+    t.json "other"
   end
 
 end

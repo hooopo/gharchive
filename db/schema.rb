@@ -10,9 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_17_145821) do
+ActiveRecord::Schema.define(version: 2021_11_18_190004) do
 
-  create_table "github_events", id: :string, charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
+  create_table "github_events", id: :string, charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "type"
     t.json "actor"
     t.json "repo"
@@ -21,6 +21,16 @@ ActiveRecord::Schema.define(version: 2021_11_17_145821) do
     t.boolean "public"
     t.datetime "created_at"
     t.json "other"
+  end
+
+  create_table "import_logs", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
+    t.string "filename", null: false
+    t.string "local_file"
+    t.string "imported_at"
+    t.string "status"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["filename"], name: "index_import_logs_on_filename"
   end
 
 end

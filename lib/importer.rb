@@ -52,7 +52,7 @@ class Importer
   end
 
   def import!
-    puts "start insert into DB ..."
+    puts "start insert #{events.count} records into DB ..."
     events.each do |event|
       GithubEvent.upsert(event)
     end

@@ -26,8 +26,11 @@ ActiveRecord::Schema.define(version: 2021_11_18_190004) do
   create_table "import_logs", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "filename", null: false
     t.string "local_file"
-    t.string "imported_at"
-    t.string "status"
+    t.datetime "start_download_at"
+    t.datetime "end_download_at"
+    t.datetime "start_import_at"
+    t.datetime "end_import_at"
+    t.datetime "start_batch_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["filename"], name: "index_import_logs_on_filename"

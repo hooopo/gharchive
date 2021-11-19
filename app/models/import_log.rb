@@ -18,18 +18,4 @@
 #  index_import_logs_on_filename  (filename)
 #
 class ImportLog < ApplicationRecord
-  def self.download(start_batch_at, filename)
-    return unless block_given?
-    log = self.create!(start_batch_at: start_batch_at, filename: filename, start_download_at: Time.now)
-    yield(log)
-    log.update(end_download_at: Time.now)
-    log
-  end
-
-  def self.import(filename, log)
-    return unless block_given?
-    log.update(start_import_at: Time.now)
-    yield(log)
-    log.update(end_import_at: Time.now)
-  end
 end

@@ -10,6 +10,8 @@ aws_server.sh
 .env.local
 
 # Ignore all logfiles and tempfiles.
+/cache
+/cache/*
 /log/*
 /tmp/*
 !/log/.keep

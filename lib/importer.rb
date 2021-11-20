@@ -52,9 +52,12 @@ class Importer
   end
 
   def import!
-    puts "start insert #{events.count} records into DB ..."
-    events.each do |event|
-      GithubEvent.upsert(event)
+    if ENV['upsert']
+      puts "start insert #{events.count} records into DB using upsert_all ..."
+      GithubEvent.upsert_all(events)
+    else
+      puts "start insert #{events.count} records into DB using insert_all ..."
+      GithubEvent.insert_all(events)
     end
   end
 end

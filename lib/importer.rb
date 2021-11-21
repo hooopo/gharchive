@@ -1,7 +1,8 @@
 class Importer
-  attr_reader :filename, :url, :cache_dir, :batch_at, :import_log, :events, :cache_filename, :raw_events
+  attr_reader :filename, :url, :cache_dir, :batch_at, :import_log, :events, :cache_filename, :raw_events, :dump_dir
 
   ATTRS = %W[id type actor repo org payload public created_at]
+  JSON_ATTRS = %w[actor repo org payload]
 
 
   def initialize(filename, dir = nil)
@@ -13,6 +14,7 @@ class Importer
     @import_log      = ImportLog.create!(filename: filename, start_batch_at: batch_at)
     @json_stream     = nil
     @events          = []
+    @dump_dir        = ENV['DUMP_DIR'] || Rails.root.join("dumping").to_s
   end
 
   def run!
@@ -52,12 +54,35 @@ class Importer
   end
 
   def import!
-    if ENV['upsert']
-      puts "start insert #{events.count} records into DB using upsert_all ..."
-      GithubEvent.upsert_all(events)
+    if ENV['upsert_all']
+      upsert_all
+    elsif ENV['insert_all']
+      dumpling
     else
-      puts "start insert #{events.count} records into DB using insert_all ..."
-      GithubEvent.insert_all(events)
+      dumpling
     end
+  end
+
+  def dumpling
+    puts "start dump #{events.count} records to csv file ..."
+    events.map! do |event|
+      JSON_ATTRS.each do |attr|
+        event[attr] = event[attr].to_json if event[attr]
+      end
+      event
+    end
+    
+    tidb_dumpling = TidbDumpling.new(dump_dir, 'gharchive')
+    tidb_dumpling.save_table_rows_to_csv(import_log.id, 'github_events', ATTRS, events)
+  end
+
+  def upsert_all
+    puts "start insert #{events.count} records into DB using upsert_all ..."
+    GithubEvent.upsert_all(events)
+  end
+
+  def insert_all
+    puts "start insert #{events.count} records into DB using insert_all ..."
+    GithubEvent.insert_all(events)
   end
 end

@@ -8,6 +8,7 @@
 aws_server.sh
 /.bundle
 .env.local
+/dumping/
 
 # Ignore all logfiles and tempfiles.
 /cache

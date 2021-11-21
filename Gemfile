@@ -64,3 +64,5 @@ gem "pry-rails", "~> 0.3.9"
 gem "retryable", "~> 3.0"
 
 gem "annotate", "~> 3.1"
+
+gem "csv", "~> 3.2"

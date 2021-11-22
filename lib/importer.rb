@@ -72,7 +72,7 @@ class Importer
       event
     end
     
-    tidb_dumpling = TidbDumpling.new(dump_dir, 'gharchive')
+    tidb_dumpling = TidbDumpling.new(dump_dir, ENV['TARGET_DB'] || ActiveRecord::Base.connection.current_database)
     tidb_dumpling.save_table_rows_to_csv2(import_log.id, 'github_events', ATTRS, events)
   end
 

@@ -18,7 +18,7 @@ namespace :gh do
     to   = ENV['TO'] || Time.now.to_date.to_s
     
     # Simulate the generation of tidb dumping, export the file directory structure and schema definition required by tidb-lightning
-    TidbDumpling.new(dump_dir, 'gharchive').run
+    TidbDumpling.new(dump_dir, ENV['TARGET_DB'] || ActiveRecord::Base.connection.current_database).run
 
     (Date.parse(from)..Date.parse(to)).each do |d|
       (0..23).each do |hour|

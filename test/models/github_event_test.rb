@@ -10,8 +10,10 @@
 #  payload    :json
 #  public     :boolean
 #  repo       :json
+#  repo_name  :string(255)
 #  type       :string(255)
 #  created_at :datetime
+#  repo_id    :string(255)
 #
 require "test_helper"
 

@@ -3,6 +3,7 @@ class Importer
 
   ATTRS = %W[id type actor repo org payload public created_at]
   JSON_ATTRS = %w[actor repo org payload other]
+  EXTRACT_ATTRS = %w[other is_oss_db repo_name repo_id]
 
   DB_REPO = [
     "elastic/elasticsearch",
@@ -67,7 +68,15 @@ class Importer
       ATTRS.each do |attr|
         event[attr] = nil if event[attr].nil?
       end
-      @events << event.merge("other" => other)
+      repo_id = event.dig("repo", "id")
+      repo_name = event.dig("repo", "name")
+      is_oss_db = DB_REPO_CACHE[repo_name]
+      @events << event.merge(
+        "other" => other, 
+        "repo_id" => repo_id, 
+        "repo_name" => repo_name,
+        "is_oss_db" => is_oss_db
+      )
     end
   end
 
@@ -105,7 +114,7 @@ class Importer
     end
     
     tidb_dumpling = TidbDumpling.new(dump_dir, ENV['TARGET_DB'] || ActiveRecord::Base.connection.current_database)
-    tidb_dumpling.save_table_rows_to_csv2(import_log.id, 'github_events', ATTRS + ['other'], events)
+    tidb_dumpling.save_table_rows_to_csv2(import_log.id, 'github_events', ATTRS + EXTRACT_ATTRS, events)
   end
 
   def upsert_all

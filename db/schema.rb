@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_22_141309) do
+ActiveRecord::Schema.define(version: 2021_11_22_154503) do
 
   create_table "github_events", id: :string, charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "type"
@@ -24,6 +24,13 @@ ActiveRecord::Schema.define(version: 2021_11_22_141309) do
     t.boolean "is_oss_db", default: false
     t.string "repo_id"
     t.string "repo_name"
+    t.string "actor_id"
+    t.string "actor_login"
+    t.string "actor_location"
+    t.string "language"
+    t.bigint "additions"
+    t.bigint "deletions"
+    t.string "action"
   end
 
   create_table "import_logs", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|

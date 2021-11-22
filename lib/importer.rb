@@ -3,7 +3,7 @@ class Importer
 
   ATTRS = %W[id type actor repo org payload public created_at]
   JSON_ATTRS = %w[actor repo org payload other]
-  EXTRACT_ATTRS = %w[other is_oss_db repo_name repo_id]
+  EXTRACT_ATTRS = %w[other is_oss_db repo_name repo_id language additions deletions action actor_id actor_login]
 
   DB_REPO = [
     "elastic/elasticsearch",
@@ -71,11 +71,25 @@ class Importer
       repo_id = event.dig("repo", "id")
       repo_name = event.dig("repo", "name")
       is_oss_db = DB_REPO_CACHE[repo_name]
+      language = event.dig("payload", "pull_request", "base", "repo", "language")
+      actor_id = event.dig("actor", 'id')
+      actor_login = event.dig("actor", "login")
+      actor_location = event.dig("actor", "location")
+      action = event.dig("payload", "action")
+      additions = event.dig("payload", "pull_request", "additions")
+      deletions = event.dig("payload", "pull_request", "deletions")
       @events << event.merge(
         "other" => other, 
         "repo_id" => repo_id, 
         "repo_name" => repo_name,
-        "is_oss_db" => is_oss_db
+        "is_oss_db" => is_oss_db,
+        "language" => language,
+        "actor_id" => actor_id,
+        "actor_login" => actor_login,
+        "actor_location" => actor_location,
+        "additions" => additions,
+        "deletions" => deletions,
+        "action" => action
       )
     end
   end

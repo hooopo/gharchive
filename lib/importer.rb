@@ -2,7 +2,7 @@ class Importer
   attr_reader :filename, :url, :cache_dir, :batch_at, :import_log, :events, :cache_filename, :raw_events, :dump_dir
 
   ATTRS = %W[id type actor repo org payload public created_at]
-  JSON_ATTRS = %w[actor repo org payload]
+  JSON_ATTRS = %w[actor repo org payload other]
 
 
   def initialize(filename, dir = nil)
@@ -35,7 +35,7 @@ class Importer
       ATTRS.each do |attr|
         event[attr] = nil if event[attr].nil?
       end
-      @events << event.merge(other: other)
+      @events << event.merge("other" => other)
     end
   end
 
@@ -73,7 +73,7 @@ class Importer
     end
     
     tidb_dumpling = TidbDumpling.new(dump_dir, ENV['TARGET_DB'] || ActiveRecord::Base.connection.current_database)
-    tidb_dumpling.save_table_rows_to_csv2(import_log.id, 'github_events', ATTRS, events)
+    tidb_dumpling.save_table_rows_to_csv2(import_log.id, 'github_events', ATTRS + ['other'], events)
   end
 
   def upsert_all

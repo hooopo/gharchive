@@ -4,6 +4,36 @@ class Importer
   ATTRS = %W[id type actor repo org payload public created_at]
   JSON_ATTRS = %w[actor repo org payload other]
 
+  DB_REPO = [
+    "elastic/elasticsearch",
+    "clickhouse/clickhouse", 
+    "apache/spark", 
+    "pingcap/tidb",
+    "cockroachdb/cockroach", 
+    "prometheus/prometheus", 
+    "mongodb/mongo",
+    "trinodb/trino", 
+    "tikv/tikv", 
+    "redis/redis",
+    "apache/lucene-solr",
+    "apache/hbase", 
+    "prestodb/presto", 
+    "facebook/rocksdb", 
+    "apache/druid",
+    "apache/hive",
+    "percona/percona-server", 
+    "yugabyte/yugabyte-db",
+    "apache/lignite",
+    "apache/incubator-doris",
+    "citusdata/citus",
+    "timescale/timescaledb",
+    "apache/kylin",
+    "greenplum-db/gpdb",
+    "alibaba/oceanbase",
+    "influxdata/influxdb",
+    "vesoft-inc/nebula"
+  ]
+
 
   def initialize(filename, dir = nil)
     @filename        = filename

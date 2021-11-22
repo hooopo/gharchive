@@ -73,7 +73,7 @@ class Importer
     end
     
     tidb_dumpling = TidbDumpling.new(dump_dir, 'gharchive')
-    tidb_dumpling.save_table_rows_to_csv(import_log.id, 'github_events', ATTRS, events)
+    tidb_dumpling.save_table_rows_to_csv2(import_log.id, 'github_events', ATTRS, events)
   end
 
   def upsert_all

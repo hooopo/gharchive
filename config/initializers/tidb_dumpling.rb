@@ -62,6 +62,22 @@ class TidbDumpling
       end 
     end
   end
+
+  def format_field
+  end
+
+  def save_table_rows_to_csv2(id, table, columns, attrs)
+    output_file = File.join(dump_dir, table_csv_filename(id, table))
+    File.open(output_file, "w") do |f|
+      attrs.each_with_index do |attr, i|
+        if i == 0
+          f.write columns.map{|c| c.inspect }.join(",")
+        end
+        f.write "\n"
+        f.write attr.values_at(*columns).map {|v| v.nil? ? "\\N" :  v.to_s.inspect}.join(",")
+      end 
+    end
+  end
 end
 
 # gharchive_dev-schema-create.sql                   gharchive_dev.import_logs-schema.sql

@@ -19,7 +19,13 @@
 #
 class ImportLog < ApplicationRecord
   def date_id
-    filename.scan(/\d/).join
+    m = filename.match(/(\d{4})-(\d{2})-(\d{2})-(\d{1,2})/)
+    [
+      m[1],
+      m[2],
+      m[3],
+      '%02d' % m[4]
+    ].join
   end
 
   def date_str

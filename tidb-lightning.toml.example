@@ -27,6 +27,7 @@ on-duplicate = "replace"
 
 data-source-dir = "/tmp/gharchives"
 strict-format = false
+no-schema = true
 
 
 [tidb]

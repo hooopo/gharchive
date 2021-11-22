@@ -34,6 +34,8 @@ class Importer
     "vesoft-inc/nebula"
   ]
 
+  DB_REPO_CACHE = DB_REPO.map{|k| [k, true]}.to_h
+
 
   def initialize(filename, dir = nil)
     @filename        = filename

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_18_190004) do
+ActiveRecord::Schema.define(version: 2021_11_22_135603) do
 
   create_table "github_events", id: :string, charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "type"
@@ -21,6 +21,7 @@ ActiveRecord::Schema.define(version: 2021_11_18_190004) do
     t.boolean "public"
     t.datetime "created_at"
     t.json "other"
+    t.boolean "is_oss_db", default: false
   end
 
   create_table "import_logs", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|

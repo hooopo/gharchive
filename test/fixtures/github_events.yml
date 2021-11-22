@@ -4,6 +4,7 @@
 #
 #  id         :string(255)      not null, primary key
 #  actor      :json
+#  is_oss_db  :boolean          default(FALSE)
 #  org        :json
 #  other      :json
 #  payload    :json

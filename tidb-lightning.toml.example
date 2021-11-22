@@ -20,6 +20,7 @@ trim-last-separator = false
 [tikv-importer]
 # use the TiDB-backend.
 backend = "tidb"
+on-duplicate = "replace"
 
 
 [mydumper]

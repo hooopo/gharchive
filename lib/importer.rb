@@ -128,7 +128,7 @@ class Importer
     end
     
     tidb_dumpling = TidbDumpling.new(dump_dir, ENV['TARGET_DB'] || ActiveRecord::Base.connection.current_database)
-    tidb_dumpling.save_table_rows_to_csv2(import_log.id, 'github_events', ATTRS + EXTRACT_ATTRS, events)
+    tidb_dumpling.save_table_rows_to_csv2(import_log.date_id, 'github_events', ATTRS + EXTRACT_ATTRS, events)
   end
 
   def upsert_all

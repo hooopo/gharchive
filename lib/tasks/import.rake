@@ -13,8 +13,8 @@ namespace :gh do
 
     dump_dir = Rails.root.join('dumping').to_s
     FileUtils.mkdir_p dump_dir
-
-    from = ENV['FROM'] || '2015-01-01'
+    
+    from = ENV['FROM'] || ImportLog.order("id desc").first&.date_str || '2015-01-01'
     to   = ENV['TO'] || Time.now.to_date.to_s
     
     # Simulate the generation of tidb dumping, export the file directory structure and schema definition required by tidb-lightning

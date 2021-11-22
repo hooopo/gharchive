@@ -18,4 +18,11 @@
 #  index_import_logs_on_filename  (filename)
 #
 class ImportLog < ApplicationRecord
+  def date_id
+    filename.scan(/\d/).join
+  end
+
+  def date_str
+    filename[0, 10]
+  end
 end

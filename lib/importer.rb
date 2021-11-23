@@ -3,7 +3,7 @@ class Importer
 
   ATTRS = %W[id type actor repo org payload public created_at]
   JSON_ATTRS = %w[actor repo org payload other]
-  EXTRACT_ATTRS = %w[other is_oss_db repo_name repo_id language additions deletions action actor_id actor_login]
+  EXTRACT_ATTRS = %w[other is_oss_db repo_name repo_id language additions deletions action actor_id actor_login actor_location]
 
   DB_REPO = [
     "elastic/elasticsearch",

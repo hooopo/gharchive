@@ -8,9 +8,11 @@
 #  actor_location :string(255)
 #  actor_login    :string(255)
 #  additions      :bigint
+#  body           :text(65535)
 #  deletions      :bigint
 #  is_oss_db      :boolean          default(FALSE)
 #  language       :string(255)
+#  number         :integer
 #  org            :json
 #  other          :json
 #  payload        :json
@@ -20,6 +22,8 @@
 #  type           :string(255)
 #  created_at     :datetime
 #  actor_id       :string(255)
+#  comment_id     :bigint
+#  commit_id      :bigint
 #  repo_id        :string(255)
 #
 # Indexes

@@ -3,7 +3,7 @@ class Importer
 
   ATTRS = %W[id type actor repo org payload public created_at]
   JSON_ATTRS = %w[actor repo org payload other]
-  EXTRACT_ATTRS = %w[other is_oss_db repo_name repo_id language additions deletions action actor_id actor_login actor_location]
+  EXTRACT_ATTRS = %w[other is_oss_db repo_name repo_id language additions deletions action actor_id actor_login actor_location commit_id comment_id body number]
 
   DB_REPO = [
     "elastic/elasticsearch",
@@ -78,6 +78,11 @@ class Importer
       action = event.dig("payload", "action")
       additions = event.dig("payload", "pull_request", "additions")
       deletions = event.dig("payload", "pull_request", "deletions")
+      commit_id = event.dig("payload", "comment", "commit_id")
+      comment_id = event.dig("payload", "comment", "id")
+      body = event.dig("payload", "review", "body") || event.dig("payload", "comment", "body") || event.dig("payload", "issue", "body") || event.dig("payload", "pull_request", "body") || event.dig("payload", "release", "body") # payload.review.body // .payload.comment.body // .payload.issue.body? // .payload.pull_request.body? // .payload.release.body? // null,
+      body = body[0..500] if body
+      number = event.dig("payload", "issue", "number") || event.dig("payload", "pull_request", "number") || event.dig("payload", "number") # payload.issue.number? // .payload.pull_request.number? // .payload.number?
       event["payload"] = {}
       @events << event.merge(
         "other" => other, 
@@ -90,7 +95,9 @@ class Importer
         "actor_location" => actor_location,
         "additions" => additions,
         "deletions" => deletions,
-        "action" => action
+        "action" => action,
+        "commit_id" => commit_id,
+        "number" => number
       )
     end
   end

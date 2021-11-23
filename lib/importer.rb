@@ -78,6 +78,7 @@ class Importer
       action = event.dig("payload", "action")
       additions = event.dig("payload", "pull_request", "additions")
       deletions = event.dig("payload", "pull_request", "deletions")
+      event["payload"] = {}
       @events << event.merge(
         "other" => other, 
         "repo_id" => repo_id, 

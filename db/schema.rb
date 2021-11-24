@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_24_070948) do
+ActiveRecord::Schema.define(version: 2021_11_24_142342) do
 
   create_table "github_events", id: :string, charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "type"
@@ -37,6 +37,20 @@ ActiveRecord::Schema.define(version: 2021_11_24_070948) do
     t.text "body"
     t.string "org_login"
     t.bigint "org_id"
+    t.json "labels"
+    t.string "state"
+    t.boolean "locked"
+    t.datetime "closed_at"
+    t.integer "comments"
+    t.string "milestone"
+    t.datetime "pr_merged_at"
+    t.boolean "pr_draft"
+    t.boolean "pr_merged"
+    t.integer "pr_changed_files"
+    t.integer "pr_review_comments"
+    t.boolean "github_staff"
+    t.bigint "pr_or_issue_id"
+    t.string "email_domain"
     t.index ["action"], name: "index_github_events_on_action"
     t.index ["actor_id"], name: "index_github_events_on_actor_id"
     t.index ["actor_login"], name: "index_github_events_on_actor_login"

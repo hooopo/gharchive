@@ -48,7 +48,7 @@ class Importer
     @import_log      = ImportLog.create!(filename: filename, start_batch_at: batch_at)
     @json_stream     = nil
     @events          = []
-    @dump_dir        = ENV['DUMP_DIR'] || Rails.root.join("dumping").to_s
+    @dump_dir        = ENV['DUMP_DIR'] || Rails.root.join("dumping-v3").to_s
   end
 
   def run!

@@ -11,10 +11,10 @@ namespace :gh do
     cache_dir = Rails.root.join("cache/gharchives").to_s
     FileUtils.mkdir_p cache_dir
 
-    dump_dir = Rails.root.join('dumping').to_s
+    dump_dir = Rails.root.join('dumping-v3').to_s
     FileUtils.mkdir_p dump_dir
     
-    from = ENV['FROM'] || ImportLog.order("id desc").first&.date_str || '2015-01-01'
+    from = ENV['FROM'] || ImportLog.order("id desc").first&.date_str || '2016-01-01'
     to   = ENV['TO'] || Time.now.to_date.to_s
     
     # Simulate the generation of tidb dumping, export the file directory structure and schema definition required by tidb-lightning

@@ -14,6 +14,7 @@
 #  language       :string(255)
 #  number         :integer
 #  org            :json
+#  org_login      :string(255)
 #  other          :json
 #  payload        :json
 #  public         :boolean
@@ -24,6 +25,7 @@
 #  actor_id       :string(255)
 #  comment_id     :bigint
 #  commit_id      :bigint
+#  org_id         :bigint
 #  repo_id        :string(255)
 #
 # Indexes

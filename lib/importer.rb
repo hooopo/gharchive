@@ -3,7 +3,7 @@ class Importer
 
   ATTRS = %W[id type actor repo org payload public created_at]
   JSON_ATTRS = %w[actor repo org payload other]
-  EXTRACT_ATTRS = %w[other is_oss_db repo_name repo_id language additions deletions action actor_id actor_login actor_location commit_id comment_id body number]
+  EXTRACT_ATTRS = %w[other is_oss_db repo_name repo_id language additions deletions action actor_id actor_login actor_location commit_id comment_id body number org_id org_login]
 
   DB_REPO = [
     "elastic/elasticsearch",
@@ -32,10 +32,11 @@ class Importer
     "greenplum-db/gpdb",
     "alibaba/oceanbase",
     "influxdata/influxdb",
-    "vesoft-inc/nebula"
+    "vesoft-inc/nebula",
+    "scylladb/scylla"
   ]
 
-  DB_REPO_CACHE = DB_REPO.map{|k| [k, true]}.to_h
+  DB_REPO_CACHE = DB_REPO.map{|k| [k, 1]}.to_h
 
 
   def initialize(filename, dir = nil)
@@ -70,6 +71,7 @@ class Importer
       end
       repo_id = event.dig("repo", "id")
       repo_name = event.dig("repo", "name")
+
       is_oss_db = DB_REPO_CACHE[repo_name]
       language = event.dig("payload", "pull_request", "base", "repo", "language")
       actor_id = event.dig("actor", 'id')
@@ -80,10 +82,15 @@ class Importer
       deletions = event.dig("payload", "pull_request", "deletions")
       commit_id = event.dig("payload", "comment", "commit_id")
       comment_id = event.dig("payload", "comment", "id")
+      org_id = event.dig("org", "id") if event["org"]
+      org_login = event.dig("org", "login") if event["org"]
       body = event.dig("payload", "review", "body") || event.dig("payload", "comment", "body") || event.dig("payload", "issue", "body") || event.dig("payload", "pull_request", "body") || event.dig("payload", "release", "body") # payload.review.body // .payload.comment.body // .payload.issue.body? // .payload.pull_request.body? // .payload.release.body? // null,
       body = body[0..500] if body
       number = event.dig("payload", "issue", "number") || event.dig("payload", "pull_request", "number") || event.dig("payload", "number") # payload.issue.number? // .payload.pull_request.number? // .payload.number?
       event["payload"] = {}
+      event["actor"] = {}
+      event["repo"] = {}
+      event["org"] = {}
       @events << event.merge(
         "other" => other, 
         "repo_id" => repo_id, 
@@ -97,7 +104,9 @@ class Importer
         "deletions" => deletions,
         "action" => action,
         "commit_id" => commit_id,
-        "number" => number
+        "number" => number,
+        "org_id" => org_id,
+        "org_login" => org_login
       )
     end
   end

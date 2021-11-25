@@ -23,6 +23,7 @@ namespace :gh do
     (Date.parse(from)..Date.parse(to)).each do |d|
       (0..23).each do |hour|
         filename = "#{d}-#{hour}.json.gz"
+        next if filename == '2016-10-21-18.json.gz'
         puts "Start import gharchive event data from #{from} to #{to} ..."
 
         importer = Importer.new(filename, cache_dir)

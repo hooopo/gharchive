@@ -8,10 +8,10 @@ require_relative '../importer'
 
 namespace :gh do 
   task :import => :environment do
-    cache_dir = Rails.root.join("cache/gharchives").to_s
+    cache_dir = ENV['CACHE_DIR'] || Rails.root.join("cache/gharchives").to_s
     FileUtils.mkdir_p cache_dir
 
-    dump_dir = Rails.root.join('dumping-v3').to_s
+    dump_dir = ENV["DUMP_DIR"] || Rails.root.join('dumping-v3').to_s
     FileUtils.mkdir_p dump_dir
     
     from = ENV['FROM'] || ImportLog.order("id desc").first&.date_str || '2016-01-01'

@@ -7,6 +7,12 @@
 * bundle exec rails db:migrate
 * bundle exec rake gh:import
 
+env config
+
+```
+FROM=2016-01-01 TO=2017-12-31 DUMP_DIR=/tmp/gh CACHE_DIR=/tmp/cache bundle exec rake gh:import
+```
+
 ```txt
 Start import gharchive event data from 2015-01-01 to 2021-11-22 ...
 start downloading, cache miss, request url: http://data.gharchive.org/2015-01-01-0.json.gz

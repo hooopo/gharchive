@@ -9,6 +9,7 @@ aws_server.sh
 /.bundle
 .env.local
 /dumping/
+/dumping*
 tidb-lightning.toml
 
 # Ignore all logfiles and tempfiles.

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_25_171458) do
+ActiveRecord::Schema.define(version: 2021_11_25_184420) do
 
   create_table "github_events", id: :string, charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "type"
@@ -56,12 +56,36 @@ ActiveRecord::Schema.define(version: 2021_11_25_171458) do
     t.integer "event_year"
     t.index ["action"], name: "index_github_events_on_action"
     t.index ["actor_id"], name: "index_github_events_on_actor_id"
+    t.index ["actor_location"], name: "index_github_events_on_actor_location"
     t.index ["actor_login"], name: "index_github_events_on_actor_login"
+    t.index ["additions"], name: "index_github_events_on_additions"
+    t.index ["closed_at"], name: "index_github_events_on_closed_at"
+    t.index ["comment_id"], name: "index_github_events_on_comment_id"
+    t.index ["comments"], name: "index_github_events_on_comments"
+    t.index ["commit_id"], name: "index_github_events_on_commit_id"
     t.index ["created_at"], name: "index_github_events_on_created_at"
+    t.index ["deletions"], name: "index_github_events_on_deletions"
+    t.index ["email_domain"], name: "index_github_events_on_email_domain"
+    t.index ["event_day"], name: "index_github_events_on_event_day"
+    t.index ["event_month"], name: "index_github_events_on_event_month"
+    t.index ["event_year"], name: "index_github_events_on_event_year"
+    t.index ["github_staff"], name: "index_github_events_on_github_staff"
     t.index ["is_oss_db"], name: "index_github_events_on_is_oss_db"
     t.index ["language"], name: "index_github_events_on_language"
+    t.index ["locked"], name: "index_github_events_on_locked"
+    t.index ["milestone"], name: "index_github_events_on_milestone"
+    t.index ["number"], name: "index_github_events_on_number"
+    t.index ["org_id"], name: "index_github_events_on_org_id"
+    t.index ["org_login"], name: "index_github_events_on_org_login"
+    t.index ["pr_changed_files"], name: "index_github_events_on_pr_changed_files"
+    t.index ["pr_draft"], name: "index_github_events_on_pr_draft"
+    t.index ["pr_merged"], name: "index_github_events_on_pr_merged"
+    t.index ["pr_merged_at"], name: "index_github_events_on_pr_merged_at"
+    t.index ["pr_or_issue_id"], name: "index_github_events_on_pr_or_issue_id"
+    t.index ["pr_review_comments"], name: "index_github_events_on_pr_review_comments"
     t.index ["repo_id"], name: "index_github_events_on_repo_id"
     t.index ["repo_name"], name: "index_github_events_on_repo_name"
+    t.index ["state"], name: "index_github_events_on_state"
     t.index ["type"], name: "index_github_events_on_type"
   end
 

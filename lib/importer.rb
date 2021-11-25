@@ -2,8 +2,16 @@ class Importer
   attr_reader :filename, :url, :cache_dir, :batch_at, :import_log, :events, :cache_filename, :raw_events, :dump_dir
 
   ATTRS = %W[id type actor repo org payload public created_at]
-  JSON_ATTRS = %w[actor repo org payload other]
-  EXTRACT_ATTRS = %w[other is_oss_db repo_name repo_id language additions deletions action actor_id actor_login actor_location commit_id comment_id body number org_id org_login]
+  JSON_ATTRS = %w[actor repo org payload other labels]
+  BOOL_ATTRS = %w[public github_staff pr_merged locked pr_draft]
+  EXTRACT_ATTRS = %w[
+    other is_oss_db repo_name
+    repo_id language additions deletions action actor_id actor_login actor_location 
+    commit_id comment_id body number org_id org_login
+    labels state locked closed_at comments milestone
+    pr_merged_at pr_draft pr_merged pr_changed_files  pr_review_comments
+    github_staff pr_or_issue_id email_domain
+  ]
 
   DB_REPO = [
     "elastic/elasticsearch",
@@ -33,7 +41,9 @@ class Importer
     "alibaba/oceanbase",
     "influxdata/influxdb",
     "vesoft-inc/nebula",
-    "scylladb/scylla"
+    "scylladb/scylla",
+    "apache/hadoop",
+    "apache/couchdb"
   ]
 
   DB_REPO_CACHE = DB_REPO.map{|k| [k, 1]}.to_h
@@ -87,6 +97,49 @@ class Importer
       body = event.dig("payload", "review", "body") || event.dig("payload", "comment", "body") || event.dig("payload", "issue", "body") || event.dig("payload", "pull_request", "body") || event.dig("payload", "release", "body") # payload.review.body // .payload.comment.body // .payload.issue.body? // .payload.pull_request.body? // .payload.release.body? // null,
       body = body[0..500] if body
       number = event.dig("payload", "issue", "number") || event.dig("payload", "pull_request", "number") || event.dig("payload", "number") # payload.issue.number? // .payload.pull_request.number? // .payload.number?
+      # site_admin: payload.pull_request.base.user.site_admin
+      github_staff = event.dig("payload", "pull_request", "base", "user", "site_admin") || 
+        event.dig("payload", "issue", "user", "site_admin")
+      
+      # x.payload.pull_request.merged
+      pr_merged = event.dig("payload", "pull_request", "merged")
+
+      # x.payload.[pull_request/issue].state
+      state = event.dig("payload", "pull_request", "state") ||
+        event.dig("payload", "issue", "state")
+
+      # x.payload.[pull_request/issue].locked
+      locked = event.dig("payload", "pull_request", "locked") || 
+        event.dig("payload", "issue", "locked")
+
+       # x.payload.[pull_request/issue].closed_at
+      closed_at = event.dig("payload", "pull_request", "closed_at") ||
+        event.dig("payload", "issue", "closed_at")
+
+      # x.payload.pull_request.merged_at
+      pr_merged_at = event.dig("payload", "pull_request", "merged_at") 
+
+      milestone = event.dig("payload", "pull_request", "milestone", "title") ||
+        event.dig("payload", "issue", "milestone", "title")
+
+      comments = event.dig("payload", "pull_request", "comments") ||
+        event.dig("payload", "issue", "comments")
+
+      pr_or_issue_id = event.dig("payload", "pull_request", "id") ||
+        event.dig("payload", "issue", "id")
+
+      pr_changed_files = event.dig("payload", "pull_request", "pr_changed_files")
+      pr_review_comments = event.dig("payload", "pull_request", "pr_review_comments")
+      pr_draft = event.dig("payload", "pull_request", "draft")
+
+      labels = event.dig("payload", "issue", "labels")
+      labels.map! {|x| x["name"] }
+      
+      # payload.commits[0].author.email
+      email_domain = event.dig("payload", "commits", 0, "author", "email")
+      email_domain = email_domain.split("@", 2).last if email_domain
+
+      binding.pry
       event["payload"] = {}
       event["actor"] = {}
       event["repo"] = {}
@@ -106,7 +159,21 @@ class Importer
         "commit_id" => commit_id,
         "number" => number,
         "org_id" => org_id,
-        "org_login" => org_login
+        "org_login" => org_login,
+        "github_staff" => github_staff,
+        "pr_merged" => pr_merged,
+        "state" => state,
+        "locked" => locked,
+        "pr_merged_at" => pr_merged_at,
+        "closed_at" => closed_at,
+        "milestone" => milestone,
+        "comments" => comments,
+        "pr_or_issue_id" => pr_or_issue_id,
+        "pr_changed_files" => pr_changed_files,
+        "pr_review_comments" => pr_review_comments,
+        "pr_draft" => pr_draft,
+        "labels" => labels,
+        "email_domain" => email_domain
       )
     end
   end
@@ -140,6 +207,9 @@ class Importer
     events.map! do |event|
       JSON_ATTRS.each do |attr|
         event[attr] = event[attr].to_json if event[attr]
+      end
+      BOOL_ATTRS.each do |attr|
+        event[attr] = 1 if event[attr]
       end
       event
     end

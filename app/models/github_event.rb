@@ -13,6 +13,9 @@
 #  comments           :integer
 #  deletions          :bigint
 #  email_domain       :string(255)
+#  event_day          :string(255)
+#  event_month        :string(255)
+#  event_year         :integer
 #  github_staff       :boolean
 #  is_oss_db          :boolean          default(FALSE)
 #  labels             :json

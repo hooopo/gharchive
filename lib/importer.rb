@@ -128,8 +128,8 @@ class Importer
       pr_or_issue_id = event.dig("payload", "pull_request", "id") ||
         event.dig("payload", "issue", "id")
 
-      pr_changed_files = event.dig("payload", "pull_request", "pr_changed_files")
-      pr_review_comments = event.dig("payload", "pull_request", "pr_review_comments")
+      pr_changed_files = event.dig("payload", "pull_request", "changed_files")
+      pr_review_comments = event.dig("payload", "pull_request", "review_comments")
       pr_draft = event.dig("payload", "pull_request", "draft")
 
       labels = event.dig("payload", "issue", "labels")

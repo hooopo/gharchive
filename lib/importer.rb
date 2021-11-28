@@ -1,3 +1,4 @@
+require_relative './body_extractor'
 class Importer
   attr_reader :filename, :url, :cache_dir, :batch_at, :import_log, :events, :cache_filename, :raw_events, :dump_dir
 
@@ -64,6 +65,7 @@ class Importer
   def run!
     import_log.update(start_download_at: Time.now)
     download!
+    return if @json_stream.nil?
     import_log.update(end_download_at: Time.now)
     parse!
     import_log.update(start_import_at: Time.now)
@@ -94,8 +96,7 @@ class Importer
       comment_id = event.dig("payload", "comment", "id")
       org_id = event.dig("org", "id") if event["org"]
       org_login = event.dig("org", "login") if event["org"]
-      body = event.dig("payload", "review", "body") || event.dig("payload", "comment", "body") || event.dig("payload", "issue", "body") || event.dig("payload", "pull_request", "body") || event.dig("payload", "release", "body") # payload.review.body // .payload.comment.body // .payload.issue.body? // .payload.pull_request.body? // .payload.release.body? // null,
-      body = body[0..500] if body
+      body = BodyExtractor.new(event).extract
       number = event.dig("payload", "issue", "number") || event.dig("payload", "pull_request", "number") || event.dig("payload", "number") # payload.issue.number? // .payload.pull_request.number? // .payload.number?
       # site_admin: payload.pull_request.base.user.site_admin
       github_staff = event.dig("payload", "pull_request", "base", "user", "site_admin") || 
@@ -186,17 +187,21 @@ class Importer
   end
 
   def download!
-    if File.exists?(cache_filename)
-      puts "start downloading, cache get, use #{cache_filename}"
-      gz = File.open(cache_filename) 
-    else
-      puts "start downloading, cache miss, request url: #{url}"
-      Retryable.retryable(tries: 5, on: [Timeout::Error, Net::OpenTimeout, OpenURI::HTTPError]) do
-        gz = URI.open(url, open_timeout: 600, read_timeout: 600)
+    begin
+      if File.exists?(cache_filename)
+        puts "start downloading, cache get, use #{cache_filename}"
+        gz = File.open(cache_filename) 
+      else
+        puts "start downloading, cache miss, request url: #{url}"
+        Retryable.retryable(tries: 5, on: [Timeout::Error, Net::OpenTimeout, OpenURI::HTTPError]) do
+          gz = URI.open(url, open_timeout: 600, read_timeout: 600)
+        end
       end
+    rescue OpenURI::HTTPError
+      puts "skip 404 file: #{url}"
+    else
+      @json_stream = Zlib::GzipReader.new(gz).read
     end
-
-    @json_stream = Zlib::GzipReader.new(gz).read
   end
 
   def import!

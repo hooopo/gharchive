@@ -25,6 +25,7 @@ namespace :gh do
         filename = "#{d}-#{hour}.json.gz"
         next if filename == '2016-10-21-18.json.gz'
         next if filename == "2020-03-05-22.json.gz"
+        next if filename == "2020-06-10-12.json.gz"
         puts "Start import gharchive event data from #{from} to #{to} ..."
 
         importer = Importer.new(filename, cache_dir)

@@ -10,15 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_25_184420) do
+ActiveRecord::Schema.define(version: 2021_12_02_074727) do
 
   create_table "github_events", id: :string, charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "type"
     t.json "actor"
     t.json "repo"
     t.json "org"
-    t.json "payload"
-    t.boolean "public"
     t.datetime "created_at"
     t.json "other"
     t.boolean "is_oss_db", default: false
@@ -50,7 +48,6 @@ ActiveRecord::Schema.define(version: 2021_11_25_184420) do
     t.integer "pr_review_comments"
     t.boolean "github_staff"
     t.bigint "pr_or_issue_id"
-    t.string "email_domain"
     t.string "event_day"
     t.string "event_month"
     t.integer "event_year"
@@ -65,7 +62,6 @@ ActiveRecord::Schema.define(version: 2021_11_25_184420) do
     t.index ["commit_id"], name: "index_github_events_on_commit_id"
     t.index ["created_at"], name: "index_github_events_on_created_at"
     t.index ["deletions"], name: "index_github_events_on_deletions"
-    t.index ["email_domain"], name: "index_github_events_on_email_domain"
     t.index ["event_day"], name: "index_github_events_on_event_day"
     t.index ["event_month"], name: "index_github_events_on_event_month"
     t.index ["event_year"], name: "index_github_events_on_event_year"
@@ -87,19 +83,6 @@ ActiveRecord::Schema.define(version: 2021_11_25_184420) do
     t.index ["repo_name"], name: "index_github_events_on_repo_name"
     t.index ["state"], name: "index_github_events_on_state"
     t.index ["type"], name: "index_github_events_on_type"
-  end
-
-  create_table "import_logs", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
-    t.string "filename", null: false
-    t.string "local_file"
-    t.datetime "start_download_at"
-    t.datetime "end_download_at"
-    t.datetime "start_import_at"
-    t.datetime "end_import_at"
-    t.datetime "start_batch_at"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["filename"], name: "index_import_logs_on_filename"
   end
 
 end

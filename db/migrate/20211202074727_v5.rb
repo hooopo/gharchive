@@ -50,7 +50,6 @@ class V5 < ActiveRecord::Migration[6.1]
       t.index ["commit_id"], name: "index_github_events_on_commit_id"
       t.index ["created_at"], name: "index_github_events_on_created_at"
       t.index ["deletions"], name: "index_github_events_on_deletions"
-      t.index ["email_domain"], name: "index_github_events_on_email_domain"
       t.index ["event_day"], name: "index_github_events_on_event_day"
       t.index ["event_month"], name: "index_github_events_on_event_month"
       t.index ["event_year"], name: "index_github_events_on_event_year"

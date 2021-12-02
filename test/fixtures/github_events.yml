@@ -12,7 +12,6 @@
 #  closed_at          :datetime
 #  comments           :integer
 #  deletions          :bigint
-#  email_domain       :string(255)
 #  event_day          :string(255)
 #  event_month        :string(255)
 #  event_year         :integer
@@ -26,13 +25,11 @@
 #  org                :json
 #  org_login          :string(255)
 #  other              :json
-#  payload            :json
 #  pr_changed_files   :integer
 #  pr_draft           :boolean
 #  pr_merged          :boolean
 #  pr_merged_at       :datetime
 #  pr_review_comments :integer
-#  public             :boolean
 #  repo               :json
 #  repo_name          :string(255)
 #  state              :string(255)
@@ -58,7 +55,6 @@
 #  index_github_events_on_commit_id           (commit_id)
 #  index_github_events_on_created_at          (created_at)
 #  index_github_events_on_deletions           (deletions)
-#  index_github_events_on_email_domain        (email_domain)
 #  index_github_events_on_event_day           (event_day)
 #  index_github_events_on_event_month         (event_month)
 #  index_github_events_on_event_year          (event_year)

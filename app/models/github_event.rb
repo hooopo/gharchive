@@ -4,7 +4,6 @@
 #
 #  id                 :string(255)      not null, primary key
 #  action             :string(255)
-#  actor              :json
 #  actor_location     :string(255)
 #  actor_login        :string(255)
 #  additions          :bigint
@@ -15,6 +14,8 @@
 #  event_day          :string(255)
 #  event_month        :string(255)
 #  event_year         :integer
+#  ext1               :string(255)
+#  ext2               :string(255)
 #  github_staff       :boolean
 #  is_oss_db          :boolean          default(FALSE)
 #  labels             :json
@@ -22,7 +23,6 @@
 #  locked             :boolean
 #  milestone          :string(255)
 #  number             :integer
-#  org                :json
 #  org_login          :string(255)
 #  other              :json
 #  pr_changed_files   :integer
@@ -30,7 +30,6 @@
 #  pr_merged          :boolean
 #  pr_merged_at       :datetime
 #  pr_review_comments :integer
-#  repo               :json
 #  repo_name          :string(255)
 #  state              :string(255)
 #  type               :string(255)

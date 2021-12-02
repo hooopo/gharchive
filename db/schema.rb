@@ -14,9 +14,6 @@ ActiveRecord::Schema.define(version: 2021_12_02_074727) do
 
   create_table "github_events", id: :string, charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "type"
-    t.json "actor"
-    t.json "repo"
-    t.json "org"
     t.datetime "created_at"
     t.json "other"
     t.boolean "is_oss_db", default: false
@@ -51,6 +48,8 @@ ActiveRecord::Schema.define(version: 2021_12_02_074727) do
     t.string "event_day"
     t.string "event_month"
     t.integer "event_year"
+    t.string "ext1"
+    t.string "ext2"
     t.index ["action"], name: "index_github_events_on_action"
     t.index ["actor_id"], name: "index_github_events_on_actor_id"
     t.index ["actor_location"], name: "index_github_events_on_actor_location"

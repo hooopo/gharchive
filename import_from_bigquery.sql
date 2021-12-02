@@ -58,11 +58,11 @@ SELECT
     END 
   as locked,
     CASE 
-      WHEN json_value(payload, '$.pull_request.losed_at') is not null THEN json_value(payload, '$.pull_request.losed_at')
-      WHEN json_value(payload, '$.issue.losed_at') is not null THEN json_value(payload, '$.issue.losed_at')
+      WHEN json_value(payload, '$.pull_request.closed_at') is not null THEN json_value(payload, '$.pull_request.closed_at')
+      WHEN json_value(payload, '$.issue.closed_at') is not null THEN json_value(payload, '$.issue.closed_at')
       ELSE null
     END 
-  as losed_at,
+  as closed_at,
     CASE 
       WHEN json_value(payload, '$.pull_request.comments') is not null THEN json_value(payload, '$.pull_request.losed_at')
       WHEN json_value(payload, '$.issue.comments') is not null THEN json_value(payload, '$.issue.comments')
@@ -96,5 +96,5 @@ SELECT
   EXTRACT(month FROM created_at) as event_month,
   EXTRACT(year FROM created_at) as event_year
 
-FROM `githubarchive.day.20150212`
-LIMIT 500
+FROM `githubarchive.day.20200101`
+LIMIT 50

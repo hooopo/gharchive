@@ -38,17 +38,11 @@ CREATE TEMP TABLE archive AS SELECT
     END 
   as closed_at,
     CASE 
-      WHEN json_value(payload, '$.pull_request.comments') is not null THEN json_value(payload, '$.pull_request.losed_at')
+      WHEN json_value(payload, '$.pull_request.comments') is not null THEN json_value(payload, '$.pull_request.comments')
       WHEN json_value(payload, '$.issue.comments') is not null THEN json_value(payload, '$.issue.comments')
       ELSE null
     END 
   as comments,
-    CASE 
-      WHEN json_value(payload, '$.pull_request.milestone.title') is not null THEN json_value(payload, '$.pull_request.milestone.title')
-      WHEN json_value(payload, '$.issue.milestone.title') is not null THEN json_value(payload, '$.issue.milestone.title')
-      ELSE null
-    END
-  as milestone,
   json_value(payload, '$.pull_request.merged_at') as pr_merged_at,
   json_value(payload, '$.pull_request.changed_files') as pr_changed_files,
   json_value(payload, '$.pull_request.review_comments') as pr_review_comments,

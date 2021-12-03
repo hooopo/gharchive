@@ -65,7 +65,7 @@ CREATE TEMP TABLE archive AS SELECT
 FROM `githubarchive.day.20200522`;
 
 EXPORT DATA OPTIONS(
-  uri='gs://gharchive.live/day1/*.csv',
+  uri='gs://gharchive.live/day1/gharchive_dev.github_events.*.csv',
   format='CSV',
   overwrite=true,
   header=true,

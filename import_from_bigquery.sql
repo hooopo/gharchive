@@ -52,14 +52,14 @@ CREATE TEMP TABLE archive AS SELECT
       ELSE null
     END 
   as pr_or_issue_id,
-  EXTRACT(day FROM created_at) as event_day,
-  EXTRACT(month FROM created_at) as event_month,
+  FORMAT_DATE('%Y-%m-%d', created_at) as event_day,
+  FORMAT_DATE('%Y-%m-01', created_at) as event_month,
   EXTRACT(year FROM created_at) as event_year
 
-FROM `githubarchive.day.20200522`;
+FROM `githubarchive.month.202111`;
 
 EXPORT DATA OPTIONS(
-  uri='gs://gharchive.live/day1/gharchive_dev.github_events.*.csv',
+  uri='gs://gharchive.live/month/202111/gharchive_dev.github_events.*.csv',
   format='CSV',
   overwrite=true,
   header=true,

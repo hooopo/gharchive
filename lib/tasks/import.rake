@@ -10,10 +10,13 @@ require_relative '../importer'
 namespace :gh do 
   task :load_meta => :environment do 
     db_repos = YAML.load_file(Rails.root.join("db_repos.yml"))
-    db_repos.each do |r|
-      name = r.keys.first 
-      id = r.dig(name, 'id')
-      DbRepo.upsert(id: id, name: name)
+    db_repos.each do |repo|
+      DbRepo.upsert(repo)
+    end
+
+    cn_orgs = YAML.load_file(Rails.root.join("cn_orgs.yml"))
+    cn_orgs.each do |org|
+      CnOrg.upsert(org)
     end
   end
 
@@ -35,7 +38,7 @@ namespace :gh do
       break if conn.affected_rows < 200000
     end
   end
-  
+
   task :import => :environment do
     cache_dir = ENV['CACHE_DIR'] || Rails.root.join("cache/gharchives").to_s
     FileUtils.mkdir_p cache_dir

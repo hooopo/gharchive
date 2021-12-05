@@ -33,7 +33,7 @@ class Importer
     "apache/hive",
     "percona/percona-server", 
     "yugabyte/yugabyte-db",
-    "apache/lignite",
+    "apache/ignite",
     "apache/incubator-doris",
     "citusdata/citus",
     "timescale/timescaledb",

@@ -1,0 +1,60 @@
+- elastic/elasticsearch:
+    id: '507775'
+- clickhouse/clickhouse:
+    id: '60246359'
+- apache/spark:
+    id: '17165658'
+- pingcap/tidb:
+    id: '41986369'
+- cockroachdb/cockroach:
+    id: '16563587'
+- prometheus/prometheus:
+    id: '6838921'
+- mongodb/mongo:
+    id: '108110'
+- trinodb/trino:
+    id: '166515022'
+- tikv/tikv:
+    id: '48833910'
+- redis/redis:
+    id: '156018'
+- apache/lucene-solr:
+    id: '688366'
+- apache/hbase:
+    id: '160985'
+- prestodb/presto:
+    id: '5349565'
+- facebook/rocksdb:
+    id: '6934395'
+- apache/druid:
+    id: '6358188'
+- apache/hive:
+    id: '206444'
+- percona/percona-server:
+    id: '30753733'
+- yugabyte/yugabyte-db:
+    id: '105944401'
+- apache/ignite:
+    id: '31006158'
+- apache/incubator-doris:
+    id: '99919302'
+- citusdata/citus:
+    id: '50874442'
+- timescale/timescaledb:
+    id: '84240850'
+- apache/kylin:
+    id: '28738447'
+- greenplum-db/gpdb:
+    id: '44781140'
+- alibaba/oceanbase:
+    id: '26521330'
+- influxdata/influxdb:
+    id: '13124802'
+- vesoft-inc/nebula:
+    id: '146459443'
+- scylladb/scylla:
+    id: '28449431'
+- apache/hadoop:
+    id: '160990'
+- apache/couchdb:
+    id: '206417'

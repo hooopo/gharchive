@@ -10,8 +10,8 @@
 #  closed_at          :datetime
 #  comments           :integer
 #  deletions          :bigint
-#  event_day          :string(255)
-#  event_month        :string(255)
+#  event_day          :date
+#  event_month        :date
 #  event_year         :integer
 #  language           :string(255)
 #  number             :integer

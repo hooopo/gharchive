@@ -18,6 +18,11 @@ namespace :gh do
     cn_orgs.each do |org|
       CnOrg.upsert(org)
     end
+
+    cn_repos = YAML.load_file(Rails.root.join("cn_repos.yml"))
+    cn_repos.each do |repo|
+      CnRepo.upsert(repo)
+    end
   end
 
   task :fix => :environment do 

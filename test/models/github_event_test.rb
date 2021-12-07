@@ -7,6 +7,7 @@
 #  actor_location     :string(255)
 #  actor_login        :string(255)
 #  additions          :bigint
+#  author_association :string(255)
 #  closed_at          :datetime
 #  comments           :integer
 #  deletions          :bigint

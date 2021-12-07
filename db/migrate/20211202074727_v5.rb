@@ -26,6 +26,7 @@ class V5 < ActiveRecord::Migration[6.1]
       t.integer "pr_changed_files"
       t.integer "pr_review_comments"
       t.bigint "pr_or_issue_id"
+      t.string "author_association"
       t.date "event_day"
       t.date "event_month"
       t.integer "event_year"

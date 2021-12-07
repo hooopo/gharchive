@@ -52,6 +52,15 @@ CREATE TEMP TABLE archive AS SELECT
       ELSE null
     END 
   as pr_or_issue_id,
+
+  CASE 
+      WHEN json_value(payload, '$.review.author_association') is not null THEN json_value(payload, '$.review.author_association')
+      WHEN json_value(payload, '$.issue.author_association') is not null THEN json_value(payload, '$.issue.author_association')
+      WHEN json_value(payload, '$.pull_request.author_association') is not null THEN json_value(payload, '$.pull_request.author_association')
+      ELSE null
+    END 
+  as author_association,
+
   FORMAT_DATE('%Y-%m-%d', created_at) as event_day,
   FORMAT_DATE('%Y-%m-01', created_at) as event_month,
   EXTRACT(year FROM created_at) as event_year

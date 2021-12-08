@@ -30,6 +30,8 @@
   name: apache/druid
 - id: '11008207'
   name: 'vitessio/vitess'
+- id: '19961085'
+  name: apache/pinot
 - id: '206444'
   name: apache/hive
 - id: '30753733'
@@ -60,3 +62,21 @@
   name: apache/hadoop
 - id: '206417'
   name: apache/couchdb
+- id: '9342529'
+  name: crate/crate
+- id: '19257422'
+  name: questdb/questdb
+- id: '196353673'
+  name: taosdata/TDengine
+- id: '172104891'
+  name: MaterializeInc/materialize
+- id: '402945349'
+  name: StarRocks/starrocks
+- id: '11225014'
+  name: etcd-io/etcd
+- id: '2649214'
+  name: arangodb/arangodb
+- id: '41349039'
+  name: dgraph-io/dgraph
+- id: '114187903'
+  name: apple/foundationdb

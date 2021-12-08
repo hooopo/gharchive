@@ -28,6 +28,8 @@
   name: facebook/rocksdb
 - id: '6358188'
   name: apache/druid
+- id: '11008207'
+  name: 'vitessio/vitess'
 - id: '206444'
   name: apache/hive
 - id: '30753733'

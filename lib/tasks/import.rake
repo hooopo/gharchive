@@ -22,12 +22,23 @@ namespace :gh do
     puts "Sync cn_orgs -> cn_repos"
 
     sql = <<-SQL
-      SELECT distinct(repo_id) as id, 
-               repo_name as name, 
-               company
+      WITH tmp AS (
+        SELECT repo_id, repo_name, max(cast(ge.id as unsigned)) as max_id 
           FROM github_events as ge 
-               JOIN cn_orgs as co ON co.id = ge.org_id
-         WHERE repo_id is not null and repo_id != ''
+               JOIN cn_orgs as co on co.id = ge.org_id
+      GROUP BY repo_id, repo_name
+      ORDER BY 1,2
+     ), tmp1 as (
+        SELECT repo_id, 
+               repo_name, 
+               row_number() over(partition by repo_id order by max_id desc) as c
+          FROM tmp
+      )
+
+      SELECT repo_id as id, 
+             repo_name as name
+        FROM tmp1 
+       WHERE c = 1 AND repo_id is not null 
     SQL
 
     results = ActiveRecord::Base.connection.select_all(sql).send(:hash_rows)

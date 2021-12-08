@@ -19,6 +19,20 @@ namespace :gh do
       CnOrg.upsert(org)
     end
 
+    puts "Sync cn_orgs -> cn_repos"
+
+    sql = <<-SQL
+      SELECT distinct(repo_id) as id, 
+               repo_name as name, 
+               company
+          FROM github_events as ge 
+               JOIN cn_orgs as co ON co.id = ge.org_id
+         WHERE repo_id is not null and repo_id != ''
+    SQL
+
+    results = ActiveRecord::Base.connection.select_all(sql).send(:hash_rows)
+    CnRepo.upsert_all(results)
+
     cn_repos = YAML.load_file(Rails.root.join("cn_repos.yml"))
     cn_repos.each do |repo|
       CnRepo.upsert(repo)

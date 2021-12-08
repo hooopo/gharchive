@@ -1,7 +1,7 @@
 class Partition < ActiveRecord::Migration[6.1]
   def change
     create_sql = <<~SQL
-      CREATE TABLE `github_events1` (
+      CREATE TABLE `github_events` (
         `id` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
         `type` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
         `created_at` datetime DEFAULT NULL,
@@ -29,6 +29,7 @@ class Partition < ActiveRecord::Migration[6.1]
         `pr_or_issue_id` bigint(20) DEFAULT NULL,
         `event_day` date DEFAULT NULL,
         `event_month` date DEFAULT NULL,
+        `author_association` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
         `event_year` int(11) DEFAULT NULL,
         KEY `index_github_events_on_id` (`id`),
         KEY `index_github_events_on_action` (`action`),
@@ -80,5 +81,6 @@ class Partition < ActiveRecord::Migration[6.1]
         PARTITION fork_apply_event VALUES IN ('ForkApplyEvent')
       );
     SQL
+    execute(create_sql)
   end
 end

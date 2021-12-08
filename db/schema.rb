@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_06_155721) do
+ActiveRecord::Schema.define(version: 2021_12_08_112931) do
 
   create_table "cn_orgs", id: :string, charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name"
@@ -52,9 +52,9 @@ ActiveRecord::Schema.define(version: 2021_12_06_155721) do
     t.integer "pr_changed_files"
     t.integer "pr_review_comments"
     t.bigint "pr_or_issue_id"
-    t.string "author_association"
     t.date "event_day"
     t.date "event_month"
+    t.string "author_association"
     t.integer "event_year"
     t.index ["action"], name: "index_github_events_on_action"
     t.index ["actor_id"], name: "index_github_events_on_actor_id"

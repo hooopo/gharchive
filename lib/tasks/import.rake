@@ -4,9 +4,71 @@ require 'yajl'
 require 'pry'
 require 'json'
 require 'uri'
+require 'yaml'
 require_relative '../importer'
 
 namespace :gh do 
+  task :load_meta => :environment do 
+    db_repos = YAML.load_file(Rails.root.join("db_repos.yml"))
+    db_repos.each do |repo|
+      DbRepo.upsert(repo)
+    end
+
+    cn_orgs = YAML.load_file(Rails.root.join("cn_orgs.yml"))
+    cn_orgs.each do |org|
+      CnOrg.upsert(org)
+    end
+
+    puts "Sync cn_orgs -> cn_repos"
+
+    sql = <<-SQL
+      WITH tmp AS (
+        SELECT repo_id, repo_name, max(cast(ge.id as unsigned)) as max_id 
+          FROM github_events as ge 
+               JOIN cn_orgs as co on co.id = ge.org_id
+      GROUP BY repo_id, repo_name
+      ORDER BY 1,2
+     ), tmp1 as (
+        SELECT repo_id, 
+               repo_name, 
+               row_number() over(partition by repo_id order by max_id desc) as c
+          FROM tmp
+      )
+
+      SELECT repo_id as id, 
+             repo_name as name
+        FROM tmp1 
+       WHERE c = 1 AND repo_id is not null 
+    SQL
+
+    results = ActiveRecord::Base.connection.select_all(sql).send(:hash_rows)
+    CnRepo.upsert_all(results)
+
+    cn_repos = YAML.load_file(Rails.root.join("cn_repos.yml"))
+    cn_repos.each do |repo|
+      CnRepo.upsert(repo)
+    end
+  end
+
+  task :fix => :environment do 
+    conn = ActiveRecord::Base.connection.raw_connection
+    loop do
+      begin
+        conn.query(<<~SQL)
+          update github_events 
+          set event_month = date_format(created_at, '%Y-%m-01'), 
+              event_day = date_format(created_at, '%Y-%m-%d') 
+          where event_month in ('1','2','3','4','5','6','7','8','9','10','11','12') 
+          limit 200000
+        SQL
+      rescue Mysql2::Error::TimeoutError
+        retry
+      end
+      puts "affected_rows #{conn.affected_rows}"
+      break if conn.affected_rows < 200000
+    end
+  end
+
   task :import => :environment do
     cache_dir = ENV['CACHE_DIR'] || Rails.root.join("cache/gharchives").to_s
     FileUtils.mkdir_p cache_dir

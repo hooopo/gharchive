@@ -50,6 +50,45 @@ namespace :gh do
     end
   end
 
+  task :db_repos_csv => :environment do 
+    file = "#{Rails.root}/tmp/db_repos.csv"
+     
+    table = DbRepo.all
+     
+    CSV.open(file, 'w' ) do |writer|
+      writer << table.first.attributes.map { |a,v| a }
+      table.each do |s|
+        writer << s.attributes.map { |a,v| v }
+      end
+    end
+  end
+
+  task :cn_repos_csv => :environment do 
+    file = "#{Rails.root}/tmp/cn_repos.csv"
+     
+    table = CnRepo.all
+     
+    CSV.open(file, 'w' ) do |writer|
+      writer << table.first.attributes.map { |a,v| a }
+      table.each do |s|
+        writer << s.attributes.map { |a,v| v }
+      end
+    end
+  end
+
+  task :cn_orgs_csv => :environment do 
+    file = "#{Rails.root}/tmp/cn_orgs.csv"
+     
+    table = CnOrg.all
+     
+    CSV.open(file, 'w' ) do |writer|
+      writer << table.first.attributes.map { |a,v| a }
+      table.each do |s|
+        writer << s.attributes.map { |a,v| v }
+      end
+    end
+  end
+
   task :import => :environment do
     cache_dir = ENV['CACHE_DIR'] || Rails.root.join("cache/gharchives").to_s
     FileUtils.mkdir_p cache_dir

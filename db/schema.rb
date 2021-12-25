@@ -12,17 +12,17 @@
 
 ActiveRecord::Schema.define(version: 2021_12_14_161151) do
 
-  create_table "cn_orgs", id: :string, charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
+  create_table "cn_orgs", id: :string, charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
     t.string "name"
     t.string "company"
   end
 
-  create_table "cn_repos", id: :string, charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
+  create_table "cn_repos", id: :string, charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
     t.string "name"
     t.string "company"
   end
 
-  create_table "db_repos", id: :string, charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
+  create_table "db_repos", id: :string, charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
     t.string "name"
   end
 
@@ -84,7 +84,7 @@ ActiveRecord::Schema.define(version: 2021_12_14_161151) do
     t.index ["type"], name: "index_github_events_on_type"
   end
 
-  create_table "import_logs", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
+  create_table "import_logs", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
     t.string "filename", null: false
     t.string "local_file"
     t.datetime "start_download_at"

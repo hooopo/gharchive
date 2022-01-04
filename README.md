@@ -89,7 +89,7 @@ comment_id         | bigint      | [null]   |     |         |
 author_association | varchar     | [null]   |     |         |   
       
 
-## cn_orgs
+## [cn_orgs](https://github.com/hooopo/gharchive/blob/main/meta/orgs/cn_orgs.yml)
 
 
 
@@ -99,7 +99,7 @@ id      | varchar     | [pk, not null] |     |         |
 name    | varchar     | [null]         |     |         |        
 company | varchar     | [null]         |     |         |        
 
-## cn_repos
+## [cn_repos](https://github.com/hooopo/gharchive/blob/main/meta/repos/cn_repos.yml)
 
 
 
@@ -109,7 +109,7 @@ id      | varchar     | [pk, not null] |     |         |
 name    | varchar     | [null]         |     |         |        
 company | varchar     | [null]         |     |         |        
 
-## db_repos
+## [db_repos](https://github.com/hooopo/gharchive/blob/main/meta/repos/db_repos.yml)
 
 
 

@@ -181,3 +181,6 @@
 - id: 49876476
   company: JD
   name: dangdangdotcom/sharding-jdbc
+- id: 206213815
+  company: PingCAP
+  name: chaos-mesh/chaos-mesh

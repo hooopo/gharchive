@@ -217,6 +217,9 @@
 - id: 41004122
   company: PingCAP
   name: tikv
+- id: 59082378
+  company: PingCAP
+  name: chaos-mesh
 - id: 11404085
   company: Youzan
   name: youzan

@@ -63,4 +63,5 @@
 #
 class GithubEvent < ApplicationRecord
   self.inheritance_column = :xtype
+  self.table_name = 'gh'
 end

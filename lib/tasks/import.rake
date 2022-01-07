@@ -91,7 +91,7 @@ namespace :gh do
 
   task :import => :environment do
     from = ENV['FROM'] || '2021-12-17'
-    to   = ENV['TO'] || Time.now.to_date.to_s
+    to   = ENV['TO'] || (Time.now - 1.hour).utc.to_date.to_s
 
     (Date.parse(from)..Date.parse(to)).each do |d|
       (0..23).each do |hour|
@@ -104,7 +104,6 @@ namespace :gh do
         hour_str = '%02d' % hour
         start_time = "#{d.to_s} #{hour_str}:00:00"
         end_time   = "#{d.to_s} #{hour_str}:59:59"
-        binding.pry
         loop do
           n = GithubEvent.where(created_at: (start_time..end_time)).limit(100000).delete_all
           break if n < 100000

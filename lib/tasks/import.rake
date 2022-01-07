@@ -90,17 +90,8 @@ namespace :gh do
   end
 
   task :import => :environment do
-    cache_dir = ENV['CACHE_DIR'] || Rails.root.join("cache/gharchives").to_s
-    FileUtils.mkdir_p cache_dir
-
-    dump_dir = ENV["DUMP_DIR"] || Rails.root.join('dumping-v3').to_s
-    FileUtils.mkdir_p dump_dir
-    
-    from = ENV['FROM'] || ImportLog.order("id desc").first&.date_str || '2016-01-01'
+    from = ENV['FROM'] || '2021-12-17'
     to   = ENV['TO'] || Time.now.to_date.to_s
-    
-    # Simulate the generation of tidb dumping, export the file directory structure and schema definition required by tidb-lightning
-    TidbDumpling.new(dump_dir, ENV['TARGET_DB'] || ActiveRecord::Base.connection.current_database).run
 
     (Date.parse(from)..Date.parse(to)).each do |d|
       (0..23).each do |hour|
@@ -110,7 +101,16 @@ namespace :gh do
         next if filename == "2020-06-10-12.json.gz"
         puts "Start import gharchive event data from #{from} to #{to} ..."
 
-        importer = Importer.new(filename, cache_dir)
+        hour_str = '%02d' % hour
+        start_time = "#{d.to_s} #{hour_str}:00:00"
+        end_time   = "#{d.to_s} #{hour_str}:59:59"
+        binding.pry
+        loop do
+          n = GithubEvent.where(created_at: (start_time..end_time)).limit(100000).delete_all
+          break if n < 100000
+        end
+
+        importer = Importer.new(filename)
         importer.run!
       end
     end

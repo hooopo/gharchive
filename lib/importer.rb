@@ -1,5 +1,5 @@
 class Importer
-  attr_reader :filename, :url, :cache_dir, :batch_at, :import_log, :events, :cache_filename, :raw_events, :dump_dir
+  attr_reader :filename, :url, :cache_dir, :batch_at, :import_log, :events, :raw_events, :dump_dir
 
   BOOL_ATTRS = %w[pr_merged]
   EXTRACT_ATTRS = %w[
@@ -37,7 +37,6 @@ class Importer
   def initialize(filename, cache_dir = nil)
     @filename        = filename
     @cache_dir       = cache_dir || ENV['CACHE_DIR'] || Rails.root.join("cache/gharchives/").to_s
-    @cache_filename  = File.join(cache_dir, filename)
     @url             = "http://data.gharchive.org/#{filename}"
     @batch_at        = Time.now
     @import_log      = ImportLog.create!(filename: filename, start_batch_at: batch_at)
@@ -110,8 +109,8 @@ class Importer
 
 
       date = event["created_at"].match(/((\d{4})-\d{2})-\d{2}/)
-      event_day = [date[2], date[1], date[0] ].join("-")
-      event_month = [date[2], date[1], '01'].join("-")
+      event_day = date[0]
+      event_month = [date[0], '01'].join("-")
       event_year = date[2]
 
       @events << {
@@ -149,20 +148,16 @@ class Importer
   end
 
   def download!
+    gz = nil
     begin
-      if File.exists?(cache_filename)
-        puts "start downloading, cache get, use #{cache_filename}"
-        gz = File.open(cache_filename) 
-      else
-        puts "start downloading, cache miss, request url: #{url}"
-        Retryable.retryable(tries: 5, on: [Timeout::Error, Net::OpenTimeout, OpenURI::HTTPError]) do
-          gz = URI.open(url, open_timeout: 600, read_timeout: 600)
-        end
+      puts "start downloading, cache miss, request url: #{url}"
+      Retryable.retryable(tries: 5, on: [Timeout::Error, Net::OpenTimeout, OpenURI::HTTPError]) do
+        gz = URI.open(url, open_timeout: 600, read_timeout: 600)
       end
     rescue OpenURI::HTTPError
       puts "skip 404 file: #{url}"
     else
-      @json_stream = Zlib::GzipReader.new(gz).read
+      @json_stream = Zlib::GzipReader.new(gz).read if gz
     end
   end
 
@@ -172,13 +167,16 @@ class Importer
     elsif ENV['insert_all']
       insert_all
     else
-      insert_all
+      upsert_all
     end
   end
 
   def upsert_all
     puts "start insert #{events.count} records into DB using upsert_all ..."
-    GithubEvent.upsert_all(events)
+    events.each_slice(1000) do |es|
+      puts '1000'
+      GithubEvent.upsert_all(es)
+    end
   end
 
   def insert_all

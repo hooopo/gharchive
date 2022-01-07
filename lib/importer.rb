@@ -167,22 +167,22 @@ class Importer
     elsif ENV['insert_all']
       insert_all
     else
-      upsert_all
+      insert_all
     end
   end
 
   def upsert_all
     puts "start insert #{events.count} records into DB using upsert_all ..."
-    events.each_slice(1000) do |es|
-      puts '1000'
+    events.each_slice(3000) do |es|
+      puts 'bulk insert 3000 records'
       GithubEvent.upsert_all(es)
     end
   end
 
   def insert_all
     puts "start insert #{events.count} records into DB using insert_all ..."
-    events.each_slice(1000) do |es|
-      puts '1000'
+    events.each_slice(3000) do |es|
+      puts 'bulk insert 3000 records'
       GithubEvent.insert_all(es)
     end
   end

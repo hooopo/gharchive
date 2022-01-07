@@ -106,6 +106,7 @@ namespace :gh do
         end_time   = "#{d.to_s} #{hour_str}:59:59"
         loop do
           n = GithubEvent.where(created_at: (start_time..end_time)).limit(100000).delete_all
+          puts "deleted #{n} records"
           break if n < 100000
         end
 

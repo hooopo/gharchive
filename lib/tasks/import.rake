@@ -89,6 +89,25 @@ namespace :gh do
     end
   end
 
+  task :hourly => :environment do 
+    current = (Time.now - 1.hour).utc
+    date = current.to_date
+    hour = current.hour
+    hour_str = '%02d' % hour
+    filename = "#{date}-#{hour}.json.gz"
+    puts "Start import #{date.to_s}-#{hour_str} ..."
+    start_time = "#{date.to_s} #{hour_str}:00:00"
+    end_time   = "#{date.to_s} #{hour_str}:59:59"
+    loop do
+      n = GithubEvent.where(created_at: (start_time..end_time)).limit(10000).delete_all
+      puts "deleted #{n} records"
+      break if n < 10000
+    end
+    importer = Importer.new(filename)
+    importer.run!
+    puts "Done #{date.to_s}-#{hour_str} ..."
+  end
+
   task :import => :environment do
     from = ENV['FROM'] || '2021-12-17'
     to   = ENV['TO'] || (Time.now - 1.hour).utc.to_date.to_s
@@ -105,9 +124,9 @@ namespace :gh do
         start_time = "#{d.to_s} #{hour_str}:00:00"
         end_time   = "#{d.to_s} #{hour_str}:59:59"
         loop do
-          n = GithubEvent.where(created_at: (start_time..end_time)).limit(100000).delete_all
+          n = GithubEvent.where(created_at: (start_time..end_time)).limit(10000).delete_all
           puts "deleted #{n} records"
-          break if n < 100000
+          break if n < 10000
         end
 
         importer = Importer.new(filename)

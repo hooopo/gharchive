@@ -1,0 +1,2 @@
+class NocodeRepo < ApplicationRecord
+end

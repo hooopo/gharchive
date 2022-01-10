@@ -18,3 +18,5 @@
   name: graphile/postgraphile
 - id: '43441403'
   name: strapi/strapi
+- id: '7122594'
+  name: directus/directus

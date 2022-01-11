@@ -19,6 +19,11 @@ namespace :gh do
       NocodeRepo.upsert(repo)
     end
 
+    web_framework_repos = YAML.load_file(Rails.root.join("meta/repos/web_framework_repos.yml"))
+    web_framework_repos.each do |repo|
+      WebFrameworkRepo.upsert(repo)
+    end
+
     cn_orgs = YAML.load_file(Rails.root.join("meta/orgs/cn_orgs.yml"))
     cn_orgs.each do |org|
       CnOrg.upsert(org)

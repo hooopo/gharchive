@@ -1,0 +1,2 @@
+class WebFrameworkRepo < ApplicationRecord
+end

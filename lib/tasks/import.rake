@@ -24,6 +24,11 @@ namespace :gh do
       WebFrameworkRepo.upsert(repo)
     end
 
+    programming_language_repos = YAML.load_file(Rails.root.join("meta/repos/programming_language_repos.yml"))
+    programming_language_repos.each do |repo|
+      ProgrammingLanguageRepo.upsert(repo)
+    end
+
     cn_orgs = YAML.load_file(Rails.root.join("meta/orgs/cn_orgs.yml"))
     cn_orgs.each do |org|
       CnOrg.upsert(org)

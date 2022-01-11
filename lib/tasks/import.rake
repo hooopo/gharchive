@@ -34,6 +34,11 @@ namespace :gh do
       StaticSiteGeneratorRepo.upsert(repo)
     end
 
+    js_framework_repos = YAML.load_file(Rails.root.join("meta/repos/js_framework_repos.yml"))
+    js_framework_repos.each do |repo|
+      JsFrameworkRepo.upsert(repo)
+    end
+
     cn_orgs = YAML.load_file(Rails.root.join("meta/orgs/cn_orgs.yml"))
     cn_orgs.each do |org|
       CnOrg.upsert(org)

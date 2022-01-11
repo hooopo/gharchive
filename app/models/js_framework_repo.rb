@@ -1,0 +1,2 @@
+class JsFrameworkRepo < ApplicationRecord
+end

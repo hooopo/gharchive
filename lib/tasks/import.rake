@@ -29,6 +29,11 @@ namespace :gh do
       ProgrammingLanguageRepo.upsert(repo)
     end
 
+    static_site_generator_repos = YAML.load_file(Rails.root.join("meta/repos/static_site_generator_repos.yml"))
+    static_site_generator_repos.each do |repo|
+      StaticSiteGeneratorRepo.upsert(repo)
+    end
+
     cn_orgs = YAML.load_file(Rails.root.join("meta/orgs/cn_orgs.yml"))
     cn_orgs.each do |org|
       CnOrg.upsert(org)

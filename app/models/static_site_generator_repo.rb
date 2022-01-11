@@ -1,0 +1,2 @@
+class StaticSiteGeneratorRepo < ApplicationRecord
+end

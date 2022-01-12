@@ -156,3 +156,9 @@
 
 - id: '16072585'
   name: phoenixframework/phoenix
+- id: '106995'
+  name: sinatra/sinatra
+- id: '656494'
+  name: cakephp/cakephp
+- id: '17620347'
+  name: dotnet/aspnetcore

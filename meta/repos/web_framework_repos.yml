@@ -166,3 +166,9 @@
   name: spring-projects/spring-framework
 - id: '2340549'
   name: playframework/playframework
+- id: '3431193'
+  name: yiisoft/yii2
+- id: '926544'
+  name: slimphp/Slim
+- id: '2234102'
+  name: bcit-ci/CodeIgniter

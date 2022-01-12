@@ -40,6 +40,15 @@ CREATE TABLE `cn_repos` (
   PRIMARY KEY (`id`) /*T![clustered_index] NONCLUSTERED */
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `css_framework_repos`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `css_framework_repos` (
+  `id` varchar(255) NOT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`) /*T![clustered_index] NONCLUSTERED */
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+/*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `db_repos`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -187,7 +196,7 @@ CREATE TABLE `import_logs` (
   `updated_at` datetime(6) NOT NULL,
   PRIMARY KEY (`id`) /*T![clustered_index] CLUSTERED */,
   KEY `index_import_logs_on_filename` (`filename`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin AUTO_INCREMENT=240001;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin AUTO_INCREMENT=510001;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `js_framework_repos`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -284,6 +293,7 @@ INSERT INTO `schema_migrations` (version) VALUES
 ('20220111101529'),
 ('20220111105518'),
 ('20220111105944'),
-('20220111112315');
+('20220111112315'),
+('20220112163444');
 
 

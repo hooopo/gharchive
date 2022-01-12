@@ -39,6 +39,11 @@ namespace :gh do
       JsFrameworkRepo.upsert(repo)
     end
 
+    css_framework_repos = YAML.load_file(Rails.root.join("meta/repos/css_framework_repos.yml"))
+    css_framework_repos.each do |repo|
+      CssFrameworkRepo.upsert(repo)
+    end
+
     cn_orgs = YAML.load_file(Rails.root.join("meta/orgs/cn_orgs.yml"))
     cn_orgs.each do |org|
       CnOrg.upsert(org)

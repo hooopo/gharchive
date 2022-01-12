@@ -44,3 +44,7 @@
   name: neomjs/neo
 - id: '42283287'
   name: preactjs/preact
+- id: '76694515'
+  name: hotwired/stimulus
+- id: '224663696'
+  name: alpinejs/alpine

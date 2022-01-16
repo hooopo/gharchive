@@ -50,3 +50,17 @@
   name: redwoodjs/redwood
 - id: '198488459'
   name: tinacms/tinacms
+- id: '304344049'
+  name: sveltejs/kit
+- id: '15830664'
+  name: mkdocs/mkdocs
+- id: '16501535'
+  name: metalsmith/metalsmith
+- id: '102987907'
+  name: react-static/react-static
+- id: '38655056'
+  name: rust-lang/mdBook
+- id: '143078055'
+  name: gridsome/gridsome
+- id: '28710753'
+  name: sphinx-doc/sphinx

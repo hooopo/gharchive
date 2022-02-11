@@ -110,7 +110,7 @@ class Importer
 
       date = event["created_at"].match(/((\d{4})-\d{2})-\d{2}/)
       event_day = date[0]
-      event_month = [date[0], '01'].join("-")
+      event_month = [date[1], '01'].join("-")
       event_year = date[2]
 
       @events << {

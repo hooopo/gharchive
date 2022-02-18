@@ -84,3 +84,5 @@
   name: apache/flink
 - id: '19816070'
   name: MariaDB/server
+- id: '69400326'
+  name: confluentinc/ksql

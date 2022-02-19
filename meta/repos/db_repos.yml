@@ -18,9 +18,9 @@
   name: tikv/tikv
 - id: '156018'
   name: redis/redis
-- id: '688366'
+- id: '50229487'
   name: apache/lucene-solr
-- id: '160985'
+- id: '20089857'
   name: apache/hbase
 - id: '5349565'
   name: prestodb/presto
@@ -50,7 +50,7 @@
   name: apache/kylin
 - id: '44781140'
   name: greenplum-db/gpdb
-- id: '26521330'
+- id: '217443464'
   name: alibaba/oceanbase
 - id: '13124802'
   name: influxdata/influxdb
@@ -58,7 +58,7 @@
   name: vesoft-inc/nebula
 - id: '28449431'
   name: scylladb/scylla
-- id: '160990'
+- id: '23418517'
   name: apache/hadoop
 - id: '206417'
   name: apache/couchdb

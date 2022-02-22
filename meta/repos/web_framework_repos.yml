@@ -10,40 +10,29 @@
   name: django/django
 - id: '596892'
   name: pallets/flask
-- id: '27669616'
-  name: plimble/ace
 - id: '134266604'
   name: savsgio/atreugo
 - id: '51890205'
   name: go-baa/baa
-- id: '321090371'
-  name: astaxie/beego
 - id: '26840153'
   name: go-zoo/bone
 - id: '44344606'
   name: go-chi/chi
 - id: '73350185'
   name: clevergo/clevergo
-- id: '20552407'
-  name: naoina/denco
 - id: '31504491'
   name: labstack/echo
-- id: '52498243'
-  name: qiangxue/fasthttp-routing
+
 - id: '153124788'
   name: fasthttp/router
 - id: '44498957'
   name: valyala/fasthttp
-- id: '47913213'
-  name: buaazp/fasthttprouter
-- id: '109108663'
-  name: razonyang/fastrouter
+
 - id: '71258032'
   name: teambition/gear
 - id: '258661876'
   name: gogearbox/gearbox
-- id: '235353407'
-  name: go-gem/gem
+
 - id: '20904437'
   name: gin-gonic/gin
 - id: '95761244'
@@ -54,8 +43,7 @@
   name: go-ozzo/ozzo-routing
 - id: '6701057'
   name: emicklei/go-restful
-- id: '8115252'
-  name: rcrowley/go-tigertonic
+
 - id: '46426592'
   name: dinever/golf
 - id: '61715151'
@@ -86,14 +74,8 @@
   name: bmizerany/pat
 - id: '69056502'
   name: go-playground/pure
-- id: '32683060'
-  name: vanng822/r2router
-- id: '95082650'
-  name: go-siris/siris
-- id: '28118640'
-  name: lunny/tango
-- id: '140955884'
-  name: go101/tinyrouter
+
+
 - id: '105379569'
   name: actix/actix-web
 - id: '372172254'
@@ -151,8 +133,6 @@
   name: tinyhttp/tinyhttp
 - id: '309177904'
   name: htdangkhoa/pure-http
-- id: '120338768'
-  name: foxifyjs/foxify
 
 - id: '16072585'
   name: phoenixframework/phoenix
@@ -172,3 +152,5 @@
   name: slimphp/Slim
 - id: '2234102'
   name: bcit-ci/CodeIgniter
+- id: '3577919'
+  name: beego/beego

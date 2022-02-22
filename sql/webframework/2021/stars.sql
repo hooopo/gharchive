@@ -1,9 +1,9 @@
 SELECT /*+ read_from_storage(tiflash[github_events]) */
-  db_repos.name AS repo_name,
+  wf.name AS repo_name,
   COUNT(*) AS stars
 FROM github_events 
-JOIN db_repos ON db_repos.id = github_events.repo_id
+JOIN web_framework_repos wf ON wf.id = github_events.repo_id
 WHERE type = 'WatchEvent' AND event_year = 2021
-GROUP BY db_repos.name
+GROUP BY 1
 ORDER BY 2 desc
 LIMIT 10

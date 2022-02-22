@@ -12,14 +12,10 @@
   name: pallets/flask
 - id: '134266604'
   name: savsgio/atreugo
-- id: '51890205'
-  name: go-baa/baa
-- id: '26840153'
-  name: go-zoo/bone
+
 - id: '44344606'
   name: go-chi/chi
-- id: '73350185'
-  name: clevergo/clevergo
+
 - id: '31504491'
   name: labstack/echo
 
@@ -28,8 +24,6 @@
 - id: '44498957'
   name: valyala/fasthttp
 
-- id: '71258032'
-  name: teambition/gear
 - id: '258661876'
   name: gogearbox/gearbox
 
@@ -44,10 +38,7 @@
 - id: '6701057'
   name: emicklei/go-restful
 
-- id: '46426592'
-  name: dinever/golf
-- id: '61715151'
-  name: mustafaakin/gongular
+
 - id: '6051812'
   name: gorilla/mux
 - id: '63337769'
@@ -58,22 +49,15 @@
   name: julienschmidt/httprouter
 - id: '19794492'
   name: dimfeld/httptreemux
-- id: '48551683'
-  name: go-playground/lars
-- id: '54291794'
-  name: celrenheit/lion
+
 - id: '13975314'
   name: go-martini/martini
-- id: '153058111'
-  name: kataras/muxie
+
 - id: '19922293'
   name: urfave/negroni
-- id: '30316179'
-  name: ivpusic/neo
+
 - id: '3269762'
   name: bmizerany/pat
-- id: '69056502'
-  name: go-playground/pure
 
 
 - id: '105379569'

@@ -19,6 +19,10 @@ class SqlChart
     results.rows
   end
 
+  def result_with_header
+    [headers] + results.rows
+  end
+
   def sum_num
     to_array.map{|x| x[1]}.sum
   end

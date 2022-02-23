@@ -19,45 +19,30 @@
 - id: '31504491'
   name: labstack/echo
 
-- id: '153124788'
-  name: fasthttp/router
 - id: '44498957'
   name: valyala/fasthttp
-
-- id: '258661876'
-  name: gogearbox/gearbox
 
 - id: '20904437'
   name: gin-gonic/gin
 - id: '95761244'
   name: gogf/gf
-- id: '8282363'
-  name: ant0ine/go-json-rest
-- id: '45007925'
-  name: go-ozzo/ozzo-routing
+
 - id: '6701057'
   name: emicklei/go-restful
 
 
 - id: '6051812'
   name: gorilla/mux
-- id: '63337769'
-  name: vardius/gorouter
 - id: '216532683'
   name: System-Glitch/goyave
 - id: '14956897'
   name: julienschmidt/httprouter
-- id: '19794492'
-  name: dimfeld/httptreemux
 
 - id: '13975314'
   name: go-martini/martini
 
 - id: '19922293'
   name: urfave/negroni
-
-- id: '3269762'
-  name: bmizerany/pat
 
 
 - id: '105379569'
@@ -115,8 +100,6 @@
   name: actionhero/actionhero
 - id: '271918885'
   name: tinyhttp/tinyhttp
-- id: '309177904'
-  name: htdangkhoa/pure-http
 
 - id: '16072585'
   name: phoenixframework/phoenix

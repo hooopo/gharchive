@@ -48,3 +48,7 @@
   name: hotwired/stimulus
 - id: '224663696'
   name: alpinejs/alpine
+- id: '130884470'
+  name: solidjs/solid
+- id: '82095231'
+  name: ionic-team/stencil

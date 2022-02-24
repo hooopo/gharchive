@@ -4,6 +4,8 @@
   name: mithriljs/mithril.js
 - id: '24195339'
   name: angular/angular
+- id: '460078'
+  name: angular/angular.js
 - id: '1801829'
   name: emberjs/ember.js
 - id: '757363'
@@ -14,6 +16,8 @@
   name: spine/spine
 - id: '11730342'
   name: vuejs/vue
+- id: '137078487'
+  name: vuejs/core
 - id: '5532320'
   name: Polymer/polymer
 - id: '10270250'
@@ -52,3 +56,5 @@
   name: solidjs/solid
 - id: '82095231'
   name: ionic-team/stencil
+- id: '167174'
+  name: jquery/jquery

@@ -16,7 +16,8 @@ WITH tmp AS (
       'emberjs/ember.js',
       'ionic-team/stencil',
       'hotwired/stimulus',
-      'solidjs/solid'
+      'solidjs/solid',
+      'jquery/jquery'
     )
   GROUP BY 2, 1
   ORDER BY 1 ASC, 2

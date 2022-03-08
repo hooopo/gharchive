@@ -120,10 +120,21 @@ namespace :gh do
   end
 
   task :hourly => :environment do 
-    current = (Time.now - 1.hour).utc
-    date = current.to_date
-    hour = current.hour
-    hour_str = '%02d' % hour
+    if ENV['DATE']
+      date = ENV['DATE']
+    else
+      current = (Time.now - 1.hour).utc
+      date = current.to_date
+    end
+
+    if ENV['HOUR']
+      hour = ENV['HOUR']
+      hour_str = '%02d' % hour
+    else
+      hour = current.hour
+      hour_str = '%02d' % hour
+    end
+
     filename = "#{date}-#{hour}.json.gz"
     puts "Start import #{date.to_s}-#{hour_str} ..."
     start_time = "#{date.to_s} #{hour_str}:00:00"

@@ -86,3 +86,7 @@
   name: MariaDB/server
 - id: '69400326'
   name: confluentinc/ksql
+- id: '927442'
+  name: postgres/postgres
+- id: '24494032'
+  name: mysql/mysql-server

@@ -74,6 +74,15 @@ CREATE TEMP TABLE archive AS SELECT
   as creator_user_login,
 
   CASE 
+      WHEN json_value(payload, '$.comment.user.id') is not null THEN json_value(payload, '$.comment.user.id')
+      WHEN json_value(payload, '$.review.user.id') is not null THEN json_value(payload, '$.review.user.id')
+      WHEN json_value(payload, '$.issue.user.id') is not null THEN json_value(payload, '$.issue.user.id')
+      WHEN json_value(payload, '$.pull_request.user.id') is not null THEN json_value(payload, '$.pull_request.user.id')
+      ELSE null
+    END 
+  as creator_user_id,
+
+  CASE 
       WHEN json_value(payload, '$.comment.body') is not null THEN json_value(payload, '$.comment.body')
       WHEN json_value(payload, '$.review.body') is not null THEN json_value(payload, '$.review.body')
       WHEN json_value(payload, '$.issue.body') is not null THEN json_value(payload, '$.issue.body')

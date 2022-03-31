@@ -50,8 +50,8 @@
   name: apache/kylin
 - id: '44781140'
   name: greenplum-db/gpdb
-- id: '217443464'
-  name: alibaba/oceanbase
+- id: '372536760'
+  name: oceanbase/oceanbase
 - id: '13124802'
   name: influxdata/influxdb
 - id: '146459443'

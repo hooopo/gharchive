@@ -38,3 +38,8 @@
   name: parse-community/parse-server
 - id: '190729906'
   name: Budibase/budibase
+
+- id: '349372179'
+  name: lightdash/lightdash
+- id: '300252678'
+  name: lowdefy/lowdefy

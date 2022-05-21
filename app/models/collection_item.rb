@@ -12,4 +12,5 @@
 #  index_collection_items_on_collection_id  (collection_id)
 #
 class CollectionItem < ApplicationRecord
+  belongs_to :collection
 end

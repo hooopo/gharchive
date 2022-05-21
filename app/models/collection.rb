@@ -10,4 +10,5 @@
 #  index_collections_on_name  (name) UNIQUE
 #
 class Collection < ApplicationRecord
+  has_many :collection_items
 end

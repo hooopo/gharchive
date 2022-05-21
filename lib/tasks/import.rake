@@ -8,6 +8,25 @@ require 'yaml'
 require_relative '../importer'
 
 namespace :gh do 
+  task :load_collection => :environment do 
+    Dir.glob(Rails.root.join "meta/collections/*.yml") do |file|
+      yml = YAML.load_file(file)
+      collection = Collection.where(name: yml['id']).first 
+      collection = Collection.create(id: yml['id'], name: yml['name']) if collection.nil?
+
+      item_names = collection.collection_items.map{|x| x.repo_name}
+      add_names = yml['items'] - item_names
+      remove_names = item_names - yml['items']
+
+      collection.collection_items.where(repo_name: remove_names).each {|x| x.destroy }
+      add_names.each do |name|
+        repo_id = GithubEvent.where(repo_name: name).first&.repo_id
+        next unless repo_id
+        collection.collection_items.create(repo_name: name, repo_id: repo_id)
+      end
+    end
+  end
+
   task :load_meta => :environment do 
     db_repos = YAML.load_file(Rails.root.join("meta/repos/db_repos.yml"))
     db_repos.each do |repo|

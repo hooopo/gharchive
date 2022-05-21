@@ -11,7 +11,7 @@ namespace :gh do
   task :load_collection => :environment do 
     Dir.glob(Rails.root.join "meta/collections/*.yml") do |file|
       yml = YAML.load_file(file)
-      collection = Collection.where(name: yml['id']).first 
+      collection = Collection.where(id: yml['id']).first 
       collection = Collection.create(id: yml['id'], name: yml['name']) if collection.nil?
 
       item_names = collection.collection_items.map{|x| x.repo_name}

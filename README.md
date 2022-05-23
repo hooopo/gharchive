@@ -149,3 +149,4 @@ location     | varchar     | [null]         |     |         |
 * bundle exec rails db:migrate
 * bundle exec rake gh:import
 * bundle exec rake gh:load_meta
+* bundle exec rake gh:load_collection

@@ -11,7 +11,11 @@ namespace :gh do
   task :load_collection => :environment do 
     Dir.glob(Rails.root.join "meta/collections/*.yml") do |file|
       yml = YAML.load_file(file)
-      collection = Collection.where(id: yml['id']).first 
+      collection = Collection.where(id: yml['id']).first
+      if collection && ENV['FORCE'].blank?
+        puts "skip collection id #{yml['id']}"
+        next
+      end
       collection = Collection.create(id: yml['id'], name: yml['name']) if collection.nil?
 
       item_names = collection.collection_items.map{|x| x.repo_name}
@@ -24,6 +28,7 @@ namespace :gh do
         next unless repo_id
         collection.collection_items.create(repo_name: name, repo_id: repo_id)
       end
+      puts "collection #{collection.name} #{collection.id} created"
     end
   end
 

@@ -7,6 +7,7 @@ items:
   - cube-js/cube.js
   - artf/grapesjs
   - nocodb/nocodb
+  - nocobase/nocobase
   - n8n-io/n8n
   - ToolJet/ToolJet
   - graphile/postgraphile

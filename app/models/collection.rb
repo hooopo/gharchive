@@ -2,8 +2,9 @@
 #
 # Table name: collections
 #
-#  id   :bigint           not null, primary key
-#  name :string(255)      not null
+#  id     :bigint           not null, primary key
+#  name   :string(255)      not null
+#  public :boolean          default(TRUE)
 #
 # Indexes
 #

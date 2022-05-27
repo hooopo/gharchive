@@ -150,3 +150,8 @@ location     | varchar     | [null]         |     |         |
 * bundle exec rake gh:import
 * bundle exec rake gh:load_meta
 * bundle exec rake gh:load_collection
+
+### Realtime Fetch Github Event
+
+* bundle exec rails runner 'Realtime.new(ENV["GITHUB_TOKEN"].split(","), 500).run'
+* bundle exec rails runner 'Realtime.clean!' # every 1 hour

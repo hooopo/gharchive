@@ -1,30 +1,8 @@
 class Partition < ActiveRecord::Migration[6.1]
-  #   PARTITION BY LIST COLUMNS(type) (
-  #   PARTITION push_event VALUES IN ('PushEvent'),
-  #   PARTITION create_event VALUES IN ('CreateEvent'),
-  #   PARTITION pull_request_event VALUES IN ('PullRequestEvent'),
-  #   PARTITION watch_event VALUES IN ('WatchEvent'),
-  #   PARTITION issue_comment_event VALUES IN ('IssueCommentEvent'),
-  #   PARTITION issues_event VALUES IN ('IssuesEvent'),
-  #   PARTITION delete_event VALUES IN ('DeleteEvent'),
-  #   PARTITION fork_event VALUES IN ('ForkEvent'),
-  #   PARTITION pull_request_review_comment_event VALUES IN ('PullRequestReviewCommentEvent'),
-  #   PARTITION pull_request_review_event VALUES IN ('PullRequestReviewEvent'),
-  #   PARTITION gollum_event VALUES IN ('GollumEvent'),
-  #   PARTITION release_event VALUES IN ('ReleaseEvent'),
-  #   PARTITION member_event VALUES IN ('MemberEvent'),
-  #   PARTITION commit_comment_event VALUES IN ('CommitCommentEvent'),
-  #   PARTITION public_event VALUES IN ('PublicEvent'),
-  #   PARTITION gist_event VALUES IN ('GistEvent'),
-  #   PARTITION follow_event VALUES IN ('FollowEvent'),
-  #   PARTITION event VALUES IN ('Event'),
-  #   PARTITION download_event VALUES IN ('DownloadEvent'),
-  #   PARTITION team_add_event VALUES IN ('TeamAddEvent'),
-  #   PARTITION fork_apply_event VALUES IN ('ForkApplyEvent')
-  # );
+    
   def change
     create_sql = <<~SQL
-      CREATE TABLE `github_events` (
+      CREATE TABLE `new_github_events` (
         `id` bigint(20) DEFAULT NULL,
         `type` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
         `created_at` datetime DEFAULT NULL,
@@ -43,6 +21,11 @@ class Partition < ActiveRecord::Migration[6.1]
         `org_login` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
         `org_id` bigint(20) DEFAULT NULL,
         `state` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+        `pr_or_issue_title` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+        `body` mediumtext COLLATE utf8mb4_unicode_ci,
+        `creator_user_login` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+        `creator_user_id` bigint(20) DEFAULT NULL,
+        `pr_or_issue_created_at` datetime DEFAULT NULL,
         `closed_at` datetime DEFAULT NULL,
         `comments` int(11) DEFAULT NULL,
         `pr_merged_at` datetime DEFAULT NULL,
@@ -60,27 +43,47 @@ class Partition < ActiveRecord::Migration[6.1]
         KEY `index_github_events_on_action` (`action`),
         KEY `index_github_events_on_actor_id` (`actor_id`),
         KEY `index_github_events_on_actor_login` (`actor_login`),
-        KEY `index_github_events_on_additions` (`additions`),
         KEY `index_github_events_on_closed_at` (`closed_at`),
         KEY `index_github_events_on_comment_id` (`comment_id`),
         KEY `index_github_events_on_comments` (`comments`),
         KEY `index_github_events_on_commit_id` (`commit_id`),
         KEY `index_github_events_on_created_at` (`created_at`),
-        KEY `index_github_events_on_deletions` (`deletions`),
         KEY `index_github_events_on_event_day` (`event_day`),
         KEY `index_github_events_on_event_month` (`event_month`),
         KEY `index_github_events_on_event_year` (`event_year`),
         KEY `index_github_events_on_language` (`language`),
         KEY `index_github_events_on_org_id` (`org_id`),
         KEY `index_github_events_on_org_login` (`org_login`),
-        KEY `index_github_events_on_pr_changed_files` (`pr_changed_files`),
+
         KEY `index_github_events_on_pr_merged_at` (`pr_merged_at`),
         KEY `index_github_events_on_pr_or_issue_id` (`pr_or_issue_id`),
-        KEY `index_github_events_on_pr_review_comments` (`pr_review_comments`),
         KEY `index_github_events_on_repo_id` (`repo_id`),
         KEY `index_github_events_on_repo_name` (`repo_name`),
         KEY `index_github_events_on_type` (`type`)
       ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
+        PARTITION BY LIST COLUMNS(type) (
+        PARTITION push_event VALUES IN ('PushEvent'),
+        PARTITION create_event VALUES IN ('CreateEvent'),
+        PARTITION pull_request_event VALUES IN ('PullRequestEvent'),
+        PARTITION watch_event VALUES IN ('WatchEvent'),
+        PARTITION issue_comment_event VALUES IN ('IssueCommentEvent'),
+        PARTITION issues_event VALUES IN ('IssuesEvent'),
+        PARTITION delete_event VALUES IN ('DeleteEvent'),
+        PARTITION fork_event VALUES IN ('ForkEvent'),
+        PARTITION pull_request_review_comment_event VALUES IN ('PullRequestReviewCommentEvent'),
+        PARTITION pull_request_review_event VALUES IN ('PullRequestReviewEvent'),
+        PARTITION gollum_event VALUES IN ('GollumEvent'),
+        PARTITION release_event VALUES IN ('ReleaseEvent'),
+        PARTITION member_event VALUES IN ('MemberEvent'),
+        PARTITION commit_comment_event VALUES IN ('CommitCommentEvent'),
+        PARTITION public_event VALUES IN ('PublicEvent'),
+        PARTITION gist_event VALUES IN ('GistEvent'),
+        PARTITION follow_event VALUES IN ('FollowEvent'),
+        PARTITION event VALUES IN ('Event'),
+        PARTITION download_event VALUES IN ('DownloadEvent'),
+        PARTITION team_add_event VALUES IN ('TeamAddEvent'),
+        PARTITION fork_apply_event VALUES IN ('ForkApplyEvent')
+  );
     SQL
     execute(create_sql)
   end
